@@ -1,12 +1,19 @@
 import Image from 'next/image';
-import { FC } from 'react';
-import { FiSearch } from 'react-icons/fi';
+import { useState, FC } from 'react';
 import { FaBell } from 'react-icons/fa';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { FiUser, FiBox, FiHeart, FiLogOut } from 'react-icons/fi';
+import SearchBar from './SearchBar';
 
 const Navbar: FC = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
-    <div className="bg-white shadow-md py-4">
+    <div className="bg-white shadow-md py-2">
       <div className="container mx-auto flex items-center justify-between px-4">
         <div className="flex items-center">
           <Image
@@ -17,17 +24,9 @@ const Navbar: FC = () => {
             className="mr-2"
           />
 
-          <div className="flex items-center w-full max-w-md ms-16">
-            <input
-              type="text"
-              placeholder="Search for items..."
-              className="w-full px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none"
-            />
-            <button className="px-4 py-2 bg-green-500 text-white rounded-r-md">
-              <FiSearch size={26} />
-            </button>
-          </div>
+          <SearchBar />
         </div>
+
         <div className="flex items-center">
           <div className="relative mr-4">
             <FaBell size={24} className="text-gray-500 cursor-pointer" />
@@ -36,7 +35,10 @@ const Navbar: FC = () => {
             </span>
           </div>
 
-          <div className="flex items-center cursor-pointer">
+          <div
+            className="relative flex items-center cursor-pointer"
+            onClick={toggleDropdown}
+          >
             <Image
               src="/chamodi.jpg"
               alt="User Avatar"
@@ -50,6 +52,41 @@ const Navbar: FC = () => {
               </h2>
             </div>
             <MdKeyboardArrowDown className="ml-1 text-gray-500" size={20} />
+
+            {isDropdownOpen && (
+              <div
+                className="absolute right-0 z-50  bg-white rounded-lg shadow-lg p-4"
+                style={{ top: '50px', width: '250px' }}
+              >
+                <div className="text-center mb-4 flex gap-2">
+                  <Image
+                    src="/chamodi.jpg"
+                    alt="Chamodi Liyanage"
+                    width={50}
+                    height={50}
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <h2 className="text-sm text-gray-800 mt-2 ms-6 flex items-center font-bold">
+                    Hi Chamodi ❤️
+                  </h2>
+                </div>
+                <div className="border-t border-gray-200 my-2"></div>
+                <div className="flex flex-col text-gray-700">
+                  <button className="flex items-center py-2 text-sm hover:text-green-600">
+                    <FiUser className="mr-2" /> Manage My Account
+                  </button>
+                  <button className="flex items-center py-2 text-sm hover:text-green-600">
+                    <FiBox className="mr-2" /> My Orders
+                  </button>
+                  <button className="flex items-center py-2 text-sm hover:text-green-600">
+                    <FiHeart className="mr-2" /> My Wishlist
+                  </button>
+                  <button className="flex items-center py-2 text-sm hover:text-green-600">
+                    <FiLogOut className="mr-2" /> Sign Out
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
