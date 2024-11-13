@@ -31,9 +31,7 @@ const Profile = () => {
 
             <input
               type="text"
-              id="FirstName"
-              name="first_name"
-              value="Your First Name"
+              placeholder="Your First Name"
               className="mt-3 py-2 px-2 w-80 rounded-sm border-gray-200 bg-gray-100 text-sm text-gray-700 shadow-sm"
             />
           </div>
@@ -45,9 +43,7 @@ const Profile = () => {
 
             <input
               type="text"
-              id="LastName"
-              name="last_name"
-              value="Your Last Name"
+              placeholder="Your Last Name"
               className="mt-3 py-2 px-2 w-80 rounded-sm border-gray-200 bg-gray-100 text-sm text-gray-700 shadow-sm"
             />
           </div>
@@ -59,9 +55,7 @@ const Profile = () => {
 
             <input
               type="email"
-              id="FirstName"
-              name="first_name"
-              value="Your Email"
+              placeholder="Your Email"
               className="mt-3 py-2 px-2 w-80 rounded-sm border-gray-200 bg-gray-100 text-sm text-gray-700 shadow-sm"
             />
           </div>
@@ -76,8 +70,7 @@ const Profile = () => {
             </div>
             <input
                 type="number"
-                id="ContactNumber"
-                name="contact_number"
+                placeholder="contact_number"
                 className="py-2 px-2 rounded-r-sm border-gray-200 bg-gray-100 text-sm text-gray-700 shadow-sm"
                 style={{ width: '17rem' }}
             />
@@ -89,9 +82,7 @@ const Profile = () => {
 
             <input
               type="text"
-              id="Address"
-              name="address"
-              value="Your Address"
+              placeholder="Your Address"
               className="mt-3 py-2 px-2 w-80 rounded-sm border-gray-200 bg-gray-100 text-sm text-gray-700 shadow-sm"
             />
           </div>
@@ -105,7 +96,7 @@ const Profile = () => {
                 name="gender"
                 className="mt-3 py-2 px-2 w-80 rounded-sm border-gray-200 bg-gray-100 text-sm text-gray-700 shadow-sm"
             >
-                <option value="">Select Your Gender</option>
+                <option value="" >Select Your Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
