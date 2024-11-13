@@ -4,10 +4,7 @@ import Profile from '@/components/auth/Profile';
 const UserProfile = () => {
   return (
     <>
-    
-    <div className=" ">  
     <Profile />
-    </div>
     </>
     
   )
