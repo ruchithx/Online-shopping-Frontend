@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Orders = () => {
-  return <div>orders</div>;
+
+  return <div>admin view of orders</div>;
+
 };
 
 export default Orders;
