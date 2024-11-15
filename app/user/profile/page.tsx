@@ -1,7 +1,13 @@
 import React from 'react';
+import Profile from '@/components/auth/Profile';
 
 const UserProfile = () => {
-  return <div></div>;
+  return (
+    <>
+    <Profile />
+    </>
+    
+  )
 };
 
 export default UserProfile;

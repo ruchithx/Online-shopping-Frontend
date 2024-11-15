@@ -11,6 +11,12 @@ const config: Config = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        VibrantRed: '#FF6B6B',
+        GoldenYellow: '#FFD93D',
+        Green: '#4CAF50',
+        SoftWhite: '#F4F4F9',
+        DeepGray: '#1A202C',
+        Gray: '#ADADAD',
       },
     },
   },
