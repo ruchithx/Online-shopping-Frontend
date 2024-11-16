@@ -1,8 +1,12 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
-
   "rules": {
-    "no-unused-vars": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "none"
+      }
+    ],
     "no-undef": "error",
     "react/react-in-jsx-scope": "off"
   }
