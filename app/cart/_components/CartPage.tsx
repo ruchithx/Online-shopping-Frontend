@@ -38,8 +38,19 @@ const CartPage: React.FC = () => {
     );
   };
 
-  const removeItem = (itemId: number) => {
-    setItems((prevItems) => prevItems.filter((item) => item.itemId !== itemId));
+  const removeItem = async (itemId: number) => {
+    try {
+      // Make DELETE request to backend to remove the item from the database
+      await axios.delete(`http://localhost:8080/api/v1/cart/delete/${itemId}`);
+
+      // Update the frontend state to remove the item from the cart
+      setItems((prevItems) =>
+        prevItems.filter((item) => item.itemId !== itemId),
+      );
+    } catch (err) {
+      console.error('Error deleting item:', err);
+      setError('Failed to remove item from cart.');
+    }
   };
 
   const calculateSummary = (): CartSummaryType => {
