@@ -15,7 +15,7 @@ const CartPage: React.FC = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/cart'); // Replace with your API URL
+        const response = await axios.get('http://localhost:8080/api/v1/cart');
         setItems(response.data);
         setLoading(false);
       } catch (err) {
@@ -28,22 +28,44 @@ const CartPage: React.FC = () => {
     fetchCartItems();
   }, []);
 
-  const updateQuantity = (itemId: number, quantity: number) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.itemId === itemId
-          ? { ...item, quantity: Math.max(1, quantity) }
-          : item,
-      ),
-    );
+  // const updateQuantity = (itemId: number, quantity: number) => {
+  //   setItems((prevItems) =>
+  //     prevItems.map((item) =>
+  //       item.itemId === itemId
+  //         ? { ...item, quantity: Math.max(1, quantity) }
+  //         : item,
+  //     ),
+  //   );
+  // };
+
+  const updateQuantity = async (itemId: number, quantity: number) => {
+    try {
+      setItems((prevItems) =>
+        prevItems.map((item) =>
+          item.itemId === itemId
+            ? { ...item, quantity: Math.max(1, quantity) }
+            : item,
+        ),
+      );
+
+      await axios.put(
+        `http://localhost:8080/api/v1/cart/update/${itemId}`,
+        null,
+        {
+          params: { quantity: Math.max(1, quantity) },
+        },
+      );
+      console.log('Updated quantity:', quantity);
+    } catch (err) {
+      console.error('Error updating quantity:', err);
+      setError('Failed to update item quantity.');
+    }
   };
 
   const removeItem = async (itemId: number) => {
     try {
-      // Make DELETE request to backend to remove the item from the database
       await axios.delete(`http://localhost:8080/api/v1/cart/delete/${itemId}`);
 
-      // Update the frontend state to remove the item from the cart
       setItems((prevItems) =>
         prevItems.filter((item) => item.itemId !== itemId),
       );
