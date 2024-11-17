@@ -27,15 +27,26 @@ const CartPage: React.FC = () => {
 
     fetchCartItems();
   }, []);
+  // const addItem = async (newItem: CartItem) => {
+  //   try {
+  //     const response = await axios.post('http://localhost:8080/api/v1/cart/add', {
+  //       cartId: newItem.cartId,
+  //       itemId: newItem.itemId,
+  //       productName: newItem.productName,
+  //       price: newItem.price,
+  //       quantity: newItem.quantity,
+  //       discount: newItem.discount,
+  //     });
 
-  // const updateQuantity = (itemId: number, quantity: number) => {
-  //   setItems((prevItems) =>
-  //     prevItems.map((item) =>
-  //       item.itemId === itemId
-  //         ? { ...item, quantity: Math.max(1, quantity) }
-  //         : item,
-  //     ),
-  //   );
+  //     if (response.status === 200) {
+  //       // Update the state with the new item
+  //       setItems((prevItems) => [...prevItems, newItem]);
+  //       console.log('Item added successfully');
+  //     }
+  //   } catch (err) {
+  //     console.error('Error adding item:', err);
+  //     setError('Failed to add item.');
+  //   }
   // };
 
   const updateQuantity = async (itemId: number, quantity: number) => {
