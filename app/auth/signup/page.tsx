@@ -2,6 +2,8 @@ import React from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Apple, ArrowRight, Gift, Heart, Package, ShoppingBag } from 'lucide-react'
+import Image from 'next/image';
+
 
 
 const Signup = () => {
@@ -107,10 +109,12 @@ const Signup = () => {
               className="relative w-full py-6 text-lg"
            
             >
-              <img
+               <Image
                 src="/google.svg"
                 alt="Google"
-                className="absolute left-4 h-5 w-5"
+                width={20}
+                height={20}
+                className="absolute left-4"
               />
               Continue with google
             </Button>
@@ -125,8 +129,8 @@ const Signup = () => {
           </div>
 
           <p className="text-center text-sm text-gray-500">
-            By continuing you agree to create or log in to an account under FreshMart Terms of Use and
-            Privacy Policy and Bolt's Terms of Use and Privacy Policy.
+          By continuing you agree to create or log in to an account under FreshMart&apos;s Terms of Use and
+          Privacy Policy and Bolt&apos;s Terms of Use and Privacy Policy.
           </p>
         </div>
       </div>
