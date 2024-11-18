@@ -108,7 +108,7 @@ const Signup = () => {
            
             >
               <img
-                src="https://www.google.com/favicon.ico"
+                src="/google.svg"
                 alt="Google"
                 className="absolute left-4 h-5 w-5"
               />
