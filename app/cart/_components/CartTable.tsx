@@ -1,5 +1,6 @@
 import React from 'react';
 import { CartItem } from '../types/cart';
+import Image from 'next/image';
 
 interface CartTableProps {
   items: CartItem[];
@@ -32,9 +33,11 @@ const CartTable: React.FC<CartTableProps> = ({
             return (
               <tr key={item.itemId} className="border-b">
                 <td className=" flex items-center transform translate-y-1  ">
-                  <img
+                  <Image
                     src={item.imageUrl}
+                    alt="image"
                     className="w-12 h-12 object-cover rounded-lg m-3 "
+                    width={48}
                   />
                   <span>{item.productName}</span>
                 </td>
