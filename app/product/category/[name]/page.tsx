@@ -1,11 +1,9 @@
 'use client';
 import React from 'react';
 import { FaFacebook, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
-import Navbar from '../../../components/NavBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import UnderNavbar from '@/app/components/Undernavbar';
 
 const CategoryProducts: React.FC = () => {
   const thumbnails = [
@@ -29,8 +27,6 @@ const CategoryProducts: React.FC = () => {
 
   return (
     <div>
-      <Navbar />
-      <UnderNavbar />
       <div className="w-full max-w-4xl flex mt-6 ms-12">
         <div
           className="text-4xl font-bold text-left mb-4 mr-12 cursor-pointer"
@@ -39,7 +35,7 @@ const CategoryProducts: React.FC = () => {
           Products
         </div>
         <div className="flex items-center justify-center mb-8 ">
-          <div className="flex items-center w-full  max-w-xs p-1 bg-white  rounded-full shadow-sm border-2 border-gray-300">
+          <div className="flex items-center w-full mt-2 max-w-xs p-1 bg-white  rounded-full shadow-sm border-2 border-gray-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               x="0px"
@@ -59,7 +55,7 @@ const CategoryProducts: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row items-start w-full max-w-6xl ml-36 p-6 space-y-6 md:space-y-0 md:space-x-6">
+      <div className="flex flex-col md:flex-row items-start w-full max-w-6xl ml-4 md:ml-2 lg:ml-60  p-6 space-y-6 md:space-y-0 md:space-x-6">
         <div className="flex flex-col items-center md:w-1/2 mr-12">
           <div className="border-4 border-green-500 p-4 relative">
             <Image
@@ -81,6 +77,8 @@ const CategoryProducts: React.FC = () => {
                 <Image
                   src={thumbnail.src}
                   alt={`Thumbnail ${index + 1}`}
+                  width={100}
+                  height={100}
                   className="w-16 h-16 object-cover"
                 />
               </div>

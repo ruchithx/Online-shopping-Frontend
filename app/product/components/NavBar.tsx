@@ -14,7 +14,7 @@ const Navbar: FC = () => {
 
   return (
     <div>
-      <div className="bg-[#F4F4F9] shadow-md py-4 ">
+      <div className="bg-[#F4F4F9] shadow-md py-4 w-screen ">
         <div className="flex items-center ">
           <div className="flex items-center w-3/5 justify-between">
             {' '}
@@ -73,15 +73,12 @@ const Navbar: FC = () => {
                 className="flex items-center cursor-pointer  "
                 onClick={toggleDropdown}
               >
-                {/* <img
-                  src="/chamodi.jpg"
-                  alt="Chamodi Liyanage"
-                  className="rounded-full w-12 h-12 object-cover"
-                /> */}
                 <Image
                   src="/chamodi.jpg"
                   alt="Chamodi Liyanage"
-                  className="rounded-full w-12 h-12 object-cover"
+                  width={20}
+                  height={20}
+                  className="rounded-full w-10 h-10 object-cover"
                 />
                 <div className="ml-4">
                   <h2 className="text-sm font-medium text-[#1A202C]">
