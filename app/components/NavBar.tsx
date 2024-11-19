@@ -73,7 +73,12 @@ const Navbar: FC = () => {
                 className="flex items-center cursor-pointer  "
                 onClick={toggleDropdown}
               >
-                <img
+                {/* <img
+                  src="/chamodi.jpg"
+                  alt="Chamodi Liyanage"
+                  className="rounded-full w-12 h-12 object-cover"
+                /> */}
+                <Image
                   src="/chamodi.jpg"
                   alt="Chamodi Liyanage"
                   className="rounded-full w-12 h-12 object-cover"

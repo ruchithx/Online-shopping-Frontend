@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
 import { FaFacebook, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
-import Navbar from '../../../../public/components/NavBar';
+import Navbar from '../../../components/NavBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import UnderNavbar from '@/public/components/Undernavbar';
+import UnderNavbar from '@/app/components/Undernavbar';
 
 const CategoryProducts: React.FC = () => {
   const thumbnails = [
@@ -78,7 +78,7 @@ const CategoryProducts: React.FC = () => {
                 className="border border-green-500 p-1 rounded cursor-pointer"
                 onClick={() => setMainImage(thumbnail.src)}
               >
-                <img
+                <Image
                   src={thumbnail.src}
                   alt={`Thumbnail ${index + 1}`}
                   className="w-16 h-16 object-cover"
