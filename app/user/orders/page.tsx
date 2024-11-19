@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 export default function PastOrders() {
   return (
     <div className="flex flex-col md:flex-row md:p-4 lg:p-16 md:mx-24">
@@ -20,7 +19,6 @@ export default function PastOrders() {
               Change Password
             </li>
           </ul>
-
 
           <button className="text-left w-full">
             <div className="text-lg font-semibold text-gray-700">My Orders</div>
