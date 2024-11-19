@@ -15,6 +15,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 
 const Orders = () => {
+
   const orders = [
     {
       id: '00001',
@@ -220,6 +221,7 @@ const Orders = () => {
       </main>
     </div>
   );
+
 };
 
 export default Orders;
