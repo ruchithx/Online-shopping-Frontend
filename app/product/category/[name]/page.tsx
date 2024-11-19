@@ -5,6 +5,7 @@ import Navbar from '../../../../public/components/NavBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import UnderNavbar from '@/public/components/Undernavbar';
 
 const CategoryProducts: React.FC = () => {
   const thumbnails = [
@@ -27,8 +28,9 @@ const CategoryProducts: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col  bg-gray-50 min-h-screen">
+    <div>
       <Navbar />
+      <UnderNavbar />
       <div className="w-full max-w-4xl flex mt-6 ms-12">
         <div
           className="text-4xl font-bold text-left mb-4 mr-12 cursor-pointer"
@@ -126,25 +128,9 @@ const CategoryProducts: React.FC = () => {
 
           <div className="flex items-center gap-6 ">
             <p className="text-gray-500 font-semibold">Share :</p>
-            <FaFacebook
-              className="text-gray-700 cursor-pointer"
-              size={20}
-              onClick={() =>
-                (window.location.href = 'https://www.facebook.com')
-              }
-            />
-            <FaWhatsapp
-              className="text-gray-700 cursor-pointer"
-              size={20}
-              onClick={() =>
-                (window.location.href = 'https://www.whatsapp.com')
-              }
-            />
-            <FaEnvelope
-              className="text-gray-700 cursor-pointer"
-              size={20}
-              onClick={() => (window.location.href = 'https://www.email.com')}
-            />
+            <FaFacebook className="text-gray-700 cursor-pointer" size={20} />
+            <FaWhatsapp className="text-gray-700 cursor-pointer" size={20} />
+            <FaEnvelope className="text-gray-700 cursor-pointer" size={20} />
           </div>
         </div>
       </div>

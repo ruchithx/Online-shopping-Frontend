@@ -1,6 +1,6 @@
+'use client';
 import Image from 'next/image';
 import { useState, FC } from 'react';
-import { FaBell } from 'react-icons/fa';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { FiUser, FiBox, FiHeart, FiLogOut } from 'react-icons/fi';
 import SearchBar from './SearchBar';
@@ -13,80 +13,111 @@ const Navbar: FC = () => {
   };
 
   return (
-    <div className="bg-white shadow-md py-2">
-      <div className="container mx-auto flex items-center justify-between px-4">
-        <div className="flex items-center">
-          <Image
-            src="/logo.png"
-            alt="Freshmart Logo"
-            width={200}
-            height={200}
-            className="mr-2"
-          />
-
-          <SearchBar />
-        </div>
-
-        <div className="flex items-center">
-          <div className="relative mr-4">
-            <FaBell size={24} className="text-gray-500 cursor-pointer" />
-            <span className="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
-              2
-            </span>
-          </div>
-
-          <div
-            className="relative flex items-center cursor-pointer"
-            onClick={toggleDropdown}
-          >
-            <Image
-              src="/chamodi.jpg"
-              alt="User Avatar"
-              width={40}
-              height={40}
-              className="h-12 w-12 rounded-full"
-            />
-            <div className="ml-2">
-              <h2 className="text-sm font-medium text-gray-700">
-                Chamodi Liyanage
-              </h2>
+    <div>
+      <div className="bg-[#F4F4F9] shadow-md py-4 ">
+        <div className="flex items-center ">
+          <div className="flex items-center w-3/5 justify-between">
+            {' '}
+            <div className="flex items-center ms-12 ">
+              <Image
+                src="/logo.png"
+                alt="Freshmart Logo"
+                width={150}
+                height={150}
+                className="cursor-pointer"
+              />
             </div>
-            <MdKeyboardArrowDown className="ml-1 text-gray-500" size={20} />
+            <div className="ms-12 ">
+              <SearchBar />
+            </div>
+          </div>
+          <div className="flex w-2/5 justify-around items-center">
+            <div className="flex items-center space-x-4 ">
+              <div className="relative">
+                <Image
+                  src="/Wishlist.png"
+                  alt="Wishlist Icon"
+                  width={20}
+                  height={20}
+                  className="w-6 h-6"
+                />
+                <span className="absolute -top-2 -right-2 bg-[#FF6B6B] text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                  4
+                </span>
+              </div>
+              <div className="text-[#1A202C] font-medium text-sm">Wishlist</div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <Image
+                  src="/Cart.png"
+                  alt="Cart Icon"
+                  width={20}
+                  height={20}
+                  className="w-6 h-6"
+                />
+                <span className="absolute -top-2 -right-2 bg-[#FF6B6B] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                  1
+                </span>
+              </div>
+              <div>
+                <span className="text-sm font-medium text-[#1A202C]">
+                  My Cart
+                </span>
+                <p className="text-[#FF6B6B] text-sm">${21}</p>
+              </div>
+            </div>
 
-            {isDropdownOpen && (
+            <div className="relative ">
               <div
-                className="absolute right-0 z-50  bg-white rounded-lg shadow-lg p-4"
-                style={{ top: '50px', width: '250px' }}
+                className="flex items-center cursor-pointer  "
+                onClick={toggleDropdown}
               >
-                <div className="text-center mb-4 flex gap-2">
-                  <Image
-                    src="/chamodi.jpg"
-                    alt="Chamodi Liyanage"
-                    width={50}
-                    height={50}
-                    className="w-12 h-12 rounded-full"
-                  />
-                  <h2 className="text-sm text-gray-800 mt-2 ms-6 flex items-center font-bold">
-                    Hi Chamodi ❤️
+                <img
+                  src="/chamodi.jpg"
+                  alt="Chamodi Liyanage"
+                  className="rounded-full w-12 h-12 object-cover"
+                />
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-[#1A202C]">
+                    Chamodi Liyanage
                   </h2>
                 </div>
-                <div className="border-t border-gray-200 my-2"></div>
-                <div className="flex flex-col text-gray-700">
-                  <button className="flex items-center py-2 text-sm hover:text-green-600">
-                    <FiUser className="mr-2" /> Manage My Account
-                  </button>
-                  <button className="flex items-center py-2 text-sm hover:text-green-600">
-                    <FiBox className="mr-2" /> My Orders
-                  </button>
-                  <button className="flex items-center py-2 text-sm hover:text-green-600">
-                    <FiHeart className="mr-2" /> My Wishlist
-                  </button>
-                  <button className="flex items-center py-2 text-sm hover:text-green-600">
-                    <FiLogOut className="mr-2" /> Sign Out
-                  </button>
-                </div>
+                <MdKeyboardArrowDown
+                  className="ml-1 text-[#1A202C]"
+                  size={20}
+                />
               </div>
-            )}
+
+              {isDropdownOpen && (
+                <div
+                  className="top-full mt-1 bg-[#4CAF50]  rounded-lg  p-4 z-50"
+                  style={{ position: 'absolute' }}
+                >
+                  <div className="text-center mb-4 flex flex-col items-center  justify-center">
+                    <h2 className="text-sm text-[#F4F4F9] font-bold text-center">
+                      Hi Chamodi ❤️
+                    </h2>
+                  </div>
+                  <div className="border-t border-white my-2 w-48"></div>
+
+                  <div className="flex flex-col text-[#F4F4F9]">
+                    <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
+                      <FiUser className="mr-2" /> Manage My Account
+                    </button>
+                    <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
+                      <FiBox className="mr-2" /> My Orders
+                    </button>
+                    <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
+                      <FiHeart className="mr-2" /> My Wishlist
+                    </button>
+                    <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
+                      <FiLogOut className="mr-2" /> Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
