@@ -1,13 +1,11 @@
-'use client';
 import React from 'react';
-import Navbar from '@/public/components/NavBar';
+
+import UnderNavbar from './product/components/Undernavbar';
 
 export default function Home() {
-
   return (
     <div>
-      <Navbar />
+      <UnderNavbar />
     </div>
   );
-
 }

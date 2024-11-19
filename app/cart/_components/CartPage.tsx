@@ -5,7 +5,7 @@ import CartTable from '../_components/CartTable';
 import CartSummary from '../_components/CartSummary';
 import { CartItem, CartSummary as CartSummaryType } from '../types/cart';
 import '../../../app/globals.css';
-import Navbar from '@/public/components/NavBar';
+import Navbar from '@/app/product/components/NavBar';
 
 const CartPage: React.FC = () => {
   const [items, setItems] = useState<CartItem[]>([]);
