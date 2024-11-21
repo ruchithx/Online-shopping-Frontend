@@ -8,9 +8,9 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex' }} className=" bg-gray">
       <Sidebar />
-      <main style={{ flexGrow: 1, padding: '20px' }}>{children}</main>
+      <main style={{ flexGrow: 1 }}>{children}</main>
     </div>
   );
 }

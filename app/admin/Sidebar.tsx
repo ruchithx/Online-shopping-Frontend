@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 const Sidebar = () => {
   return (
-    <aside className="w-64 h-screen bg-gray-100 p-4">
+    <aside className="w-64  bg-gray-100 p-4">
       <nav className="flex flex-col space-y-4">
         <Link href="/admin/dashboard">
           <div className="flex items-center space-x-2 p-2 rounded-lg hover:bg-green-100 active:bg-green-200">
