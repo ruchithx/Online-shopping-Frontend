@@ -57,7 +57,7 @@ const Product: React.FC = () => {
       </div>
       <div className="flex flex-col md:flex-row items-start w-full max-w-6xl ml-4 md:ml-2 lg:ml-60  p-6 space-y-6 md:space-y-0 md:space-x-6">
         <div className="flex flex-col items-center md:w-1/2 mr-12">
-          <div className="border-4 border-green-500 p-4 relative">
+          <div className="border-4 border-[#4CAF50] p-4 relative">
             <Image
               src={mainImage}
               alt="Carrot"
@@ -71,7 +71,7 @@ const Product: React.FC = () => {
             {thumbnails.map((thumbnail, index) => (
               <div
                 key={index}
-                className="border border-green-500 p-1 rounded cursor-pointer"
+                className="border border-[#4CAF50] p-1 rounded cursor-pointer"
                 onClick={() => setMainImage(thumbnail.src)}
               >
                 <Image
@@ -98,7 +98,7 @@ const Product: React.FC = () => {
             >
               -
             </button>
-            <div className="flex items-center border-t border-b border-green-400 px-4 py-[0.44rem]">
+            <div className="flex items-center border-t border-b border-[#4CAF50] px-4 py-[0.44rem]">
               <input
                 type="text"
                 value={value.toFixed(1)}
@@ -119,7 +119,7 @@ const Product: React.FC = () => {
 
           <div className="flex gap-6 ">
             <p className="text-gray-500 font-semibold">Tags :</p>
-            <p className="text-green-600">
+            <p className="text-[#4CAF50]">
               Vegetables, Upcountry vegetables, Roots
             </p>
           </div>
