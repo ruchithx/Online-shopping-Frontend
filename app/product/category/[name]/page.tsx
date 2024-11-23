@@ -95,7 +95,7 @@ export default function CategoryProducts() {
                 key={index}
                 className={`flex items-center border-b border-gray-300 py-4  cursor-pointer ${
                   selectedCategory === category.category
-                    ? 'text-green-500 font-bold'
+                    ? 'text-[#4CAF50] '
                     : ''
                 }`}
                 onClick={() => setSelectedCategory(category.category)}
@@ -120,7 +120,7 @@ export default function CategoryProducts() {
           </div>
         </div>
 
-        <div className="w-5/6 grid grid-cols-3 gap-12 p-8 shadow-md ">
+        <div className="w-5/6 grid grid-cols-4 gap-12 p-8 shadow-md ">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product, index) => (
               <ProductCard

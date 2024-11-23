@@ -1,3 +1,4 @@
+'use client';
 import { FC } from 'react';
 import { LuLayoutGrid } from 'react-icons/lu';
 import { FiHome } from 'react-icons/fi';
@@ -10,7 +11,10 @@ const UnderNavbar: FC = () => {
   return (
     <div className="bg-[#F4F4F9] py-2">
       <div className="flex justify-between items-center ms-12 px-4">
-        <button className="flex items-center bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">
+        <button
+          className="flex items-center bg-[#4CAF50] text-white py-2 px-4 rounded-md hover:bg-[#4CAF50]"
+          onClick={() => (window.location.href = '/product/category/[name]')}
+        >
           <LuLayoutGrid className="mr-2" />
           Browse All Categories
         </button>
@@ -36,8 +40,8 @@ const UnderNavbar: FC = () => {
         </div>
 
         <div className="hidden sm:flex items-center text-[#1A202C] mr-4 lg:mr-8 xl:mr-8">
-          <FiPhone className="text-green-500" />
-          <span className="ml-2 text-green-500">1233-7777</span>
+          <FiPhone className="text-[#4CAF50]" />
+          <span className="ml-2 text-[#4CAF50]">1233-7777</span>
           <span className="ml-1">24/7 support center</span>
         </div>
       </div>
