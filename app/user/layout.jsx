@@ -1,14 +1,12 @@
 import Sidebar from "@/components/layouts/Sidebar";
-import Header from "@/components/layouts/Header";
-import BrowseCategory from "@/components/layouts/BrowseCategory";
+import Undernavbar from "../../app/product/components/Undernavbar"
 
 export default function UserLayout({ children }) {
   return (
     <>
-      <Header/>
+    <Undernavbar/>
       <section className="py-10 bg-gray-100">
         <div className="container max-w-screen-xl mx-auto px-4">
-        <BrowseCategory/>
           <div className="flex flex-col md:flex-row -mx-4">
             <Sidebar />
             <main className="md:w-2/3 lg:w-3/4 px-4">
