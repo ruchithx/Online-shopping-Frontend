@@ -14,7 +14,7 @@ const Navbar: FC = () => {
 
   return (
     <div>
-      <div className="bg-[#F4F4F9] shadow-md py-4 w-screen ">
+      <div className="bg-[#F4F4F9] shadow-md py-4 ">
         <div className="flex items-center ">
           <div className="flex items-center w-3/5 justify-between">
             {' '}
