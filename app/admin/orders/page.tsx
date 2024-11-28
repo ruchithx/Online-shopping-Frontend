@@ -1,9 +1,8 @@
 import React from 'react';
+import OrderViewForAdmin from '@/components/order/OrderViewForAdmin';
 
 const Orders = () => {
-
-  return <div>admin view of orders</div>;
-
+  return <OrderViewForAdmin />;
 };
 
 export default Orders;

@@ -1,13 +1,17 @@
-'use client';
 import React from 'react';
-import Navbar from '@/public/components/NavBar';
+
+import UnderNavbar from './product/components/Undernavbar';
+import HeroSection from '@/components/HeroSection';
+import SupersaverSection from '@/components/SupersaverSection';
+import BestSellsSection from '@/components/BestSellsSection';
 
 export default function Home() {
-
   return (
-    <div>
-      <Navbar />
+    <div className="bg-SoftWhite">
+      <UnderNavbar />
+      <HeroSection />
+      <SupersaverSection />
+      <BestSellsSection />
     </div>
   );
-
 }

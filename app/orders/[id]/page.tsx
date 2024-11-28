@@ -1,7 +1,8 @@
 import React from 'react';
+import OrderComponent from '@/components/order/OrderComponent';
 
 const Orders = () => {
-  return <div>order details</div>;
+  return <OrderComponent />;
 };
 
 export default Orders;
