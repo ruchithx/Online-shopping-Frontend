@@ -6,6 +6,7 @@ import { LiaFireSolid } from 'react-icons/lia';
 import { LuMegaphone } from 'react-icons/lu';
 import { FiPhone } from 'react-icons/fi';
 import { AiOutlinePercentage } from 'react-icons/ai';
+import Link from 'next/link';
 
 const UnderNavbar: FC = () => {
   return (
@@ -21,10 +22,12 @@ const UnderNavbar: FC = () => {
 
         <div className="flex space-x-8 lg:space-x-8 xl:space-x-16">
           {' '}
-          <div className="flex items-center space-x-2 text-[#1A202C]">
-            <FiHome />
-            <span>Home</span>
-          </div>
+          <Link href="/">
+            <div className="flex items-center space-x-2 text-[#1A202C]">
+              <FiHome />
+              <span>Home</span>
+            </div>
+          </Link>
           <div className="flex items-center space-x-2 text-[#1A202C]">
             <LiaFireSolid />
             <span>Hot deals</span>

@@ -124,6 +124,7 @@ export default function CategoryProducts() {
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product, index) => (
               <ProductCard
+                productId={'123'}
                 key={index}
                 name={product.name}
                 price={product.price}

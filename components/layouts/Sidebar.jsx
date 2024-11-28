@@ -35,15 +35,17 @@ const Sidebar = () => {
                 </summary>
 
                 <ul className="mt-2 space-y-1 px-4">
-                  <li className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                    <Link href={'/user/profile'}>My Profile</Link>
-                  </li>
+                  <Link href={'/user/profile'}>
+                    <li className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      My Profile
+                    </li>
+                  </Link>
 
-                  <li className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                    <Link href={'/user/profile/change-password'}>
+                  <Link href={'/user/profile/change-password'}>
+                    <li className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                       Change Password
-                    </Link>
-                  </li>
+                    </li>
+                  </Link>
                 </ul>
               </details>
             </li>
@@ -70,29 +72,31 @@ const Sidebar = () => {
                 </summary>
 
                 <ul className="mt-2 space-y-1 px-4">
-                  <li className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                    <Link href={'/user/orders'}>Past Orders</Link>
-                  </li>
+                  <Link href={'/user/orders'}>
+                    <li className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      Past Orders
+                    </li>
+                  </Link>
 
-                  <li>
+                  {/* <li>
                     <Link
                       className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                       href={'#'}
                     >
                       Track My Orders
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </details>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href={'#'}
                 className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
               >
                 My WishList
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

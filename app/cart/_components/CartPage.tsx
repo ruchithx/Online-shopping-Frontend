@@ -5,7 +5,8 @@ import CartTable from '../_components/CartTable';
 import CartSummary from '../_components/CartSummary';
 import { CartItem, CartSummary as CartSummaryType } from '../types/cart';
 import '../../../app/globals.css';
-import Navbar from '@/app/product/components/NavBar';
+// import Navbar from '@/app/product/components/NavBar';
+import UnderNavbar from '@/app/product/components/Undernavbar';
 
 const CartPage: React.FC = () => {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -108,7 +109,8 @@ const CartPage: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
+      <UnderNavbar />
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="p-6 bg-gray-50 min-h-screen">
           <h2 className="text-2xl font-bold mb-6 text-center text-[#4CAF50]">
