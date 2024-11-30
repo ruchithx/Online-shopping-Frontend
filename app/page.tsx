@@ -33,8 +33,12 @@ export default async function Home() {
     <div className="bg-SoftWhite">
       <UnderNavbar />
       <HeroSection />
-      <SupersaverSection discountHaveProducts={discountHaveProducts} />
-      <BestSellsSection bestSellesProducts={bestSellesProducts} />
+      <SupersaverSection
+        discountHaveProducts={discountHaveProducts ? discountHaveProducts : []}
+      />
+      <BestSellsSection
+        bestSellesProducts={bestSellesProducts ? bestSellesProducts : []}
+      />
     </div>
   );
 }
