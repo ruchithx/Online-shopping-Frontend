@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { useRouter } from 'next/navigation'; // Corrected import for Next.js App Router
+import Image from 'next/image';
 
 const BASE_URL = 'http://localhost:3001';
 
@@ -50,15 +51,15 @@ export default function ProductsPage() {
   }, []); // Only fetch on component mount
 
   const handleCategoryClick = () => {
-    router.push('/admin/products/addNewCategory');
+    router.push('/admin/products/addnewcategory');
   };
 
   const handleBrandClick = () => {
-    router.push('/admin/products/addBrand');
+    router.push('/admin/products/addbrand');
   };
 
   const handleAddProductClick = () => {
-    router.push('/admin/products/addProduct');
+    router.push('/admin/products/addproduct');
   };
 
   if (loading) {
@@ -115,10 +116,12 @@ export default function ProductsPage() {
               {products.map((product) => (
                 <tr key={product.id} className="border-t text-gray-700">
                   <td className="p-3">
-                    <img
+                    <Image
                       src={product.image || '/placeholder.jpg'} // Use placeholder if image is empty
                       alt={product.productName}
                       className="w-16 h-16 object-cover rounded"
+                      width={64}
+                      height={64}
                     />
                   </td>
                   <td className="p-3">{product.productName}</td>

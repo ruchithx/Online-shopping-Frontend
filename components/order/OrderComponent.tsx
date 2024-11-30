@@ -23,7 +23,7 @@ export default function OrderComponent() {
     };
 
     fetchOrders();
-  }, []);
+  }, [id]);
 
   if (order == null) {
     return <Loader />;
