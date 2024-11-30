@@ -15,54 +15,60 @@ export default function CategoryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const BASE_URL = 'http://localhost:3001';
+  // const BASE_URL = 'http://localhost:3001';
+
+  const cleanForm = () => {
+    setNewCategory('');
+    setDescription('');
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getcategories`,
+      );
+      console.log(response.data);
+      setCategories(response.data); // Assuming API returns an array of category objects
+      setError(''); // Clear any previous error
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setError('Failed to fetch categories: ' + error.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     // Fetch categories when the component mounts
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get<
-          { id: number; categoryName: string; description: string }[]
-        >(`${BASE_URL}/category`);
-        setCategories(response.data); // Assuming API returns an array of category objects
-        setError(''); // Clear any previous error
-      } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          setError('Failed to fetch categories: ' + error.message);
-        } else {
-          setError('An unexpected error occurred.');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    console.log(process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL);
     fetchCategories();
   }, []); // Fetch only once on component mount
 
-  const handleAddCategory = async () => {
-    if (newCategory.trim()) {
-      try {
-        const response = await axios.post<{
-          id: number;
-          categoryName: string;
-          description: string;
-        }>(`${BASE_URL}/category`, {
-          categoryName: newCategory,
-          description: description,
-        });
-        setCategories((prevCategories) => [...prevCategories, response.data]); // Add the new category to the list
-        setNewCategory('');
-        setDescription('');
-        setError(''); // Clear any previous error
-      } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          setError('Failed to add category: ' + error.message);
-        } else {
-          setError('An unexpected error occurred.');
-        }
-      }
+  const addCategory = async () => {
+    try {
+      const data = {
+        categoryName: newCategory,
+        categoryDescription: description,
+      };
+      console.log(data);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/admin/product/addcategory`,
+        data,
+      );
+      console.log(response.data);
+      fetchCategories();
+      cleanForm();
+    } catch (e) {
+      console.log(e);
     }
+  };
+
+  const handleAddCategory = async () => {
+    addCategory();
   };
 
   if (loading) {
@@ -74,11 +80,11 @@ export default function CategoryPage() {
   }
 
   const handleBrandClick = () => {
-    router.push('/admin/products/addBrand');
+    router.push('/admin/products/addbrand');
   };
 
   const handleAddProductClick = () => {
-    router.push('/admin/products/addProduct');
+    router.push('/admin/products/addproduct');
   };
 
   return (

@@ -2,14 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import dynamic from 'next/dynamic'; // Import dynamic for client-only components
+// import dynamic from 'next/dynamic'; // Import dynamic for client-only components
+import ImageUploader from './ImageUploader';
+import Image from 'next/image';
+import { FaCloudUploadAlt } from 'react-icons/fa';
 
-const SketchPicker = dynamic(
-  () => import('react-color').then((mod) => mod.SketchPicker),
-  { ssr: false },
-); // Client-only import
+// const SketchPicker = dynamic(
+//   () => import('react-color').then((mod) => mod.SketchPicker),
+//   { ssr: false },
+// ); // Client-only import
 
-const BASE_URL = 'http://localhost:3001';
+// const BASE_URL = 'http://localhost:3001';
 
 export default function AddProductPage() {
   const [hasMounted, setHasMounted] = useState(false); // Track if the component is mounted
@@ -19,23 +22,34 @@ export default function AddProductPage() {
   const [category, setCategory] = useState('');
   const [brand, setBrand] = useState('');
   const [categories, setCategories] = useState([
-    { id: 1, categoryName: 'Category 1' },
+    { categoryId: 1, categoryName: 'Category 1' },
   ]);
-  const [brands, setBrands] = useState([{ id: 1, brandName: 'Brand 1' }]);
-  const [image, setImage] = useState(null);
+  const [brands, setBrands] = useState([{ brandId: 1, brandName: 'Brand 1' }]);
+  // const [image, setImage] = useState(null);
   const [piece, setPiece] = useState(0);
+  const [isDiscount, setIsDiscount] = useState(false);
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [status, setStatus] = useState(true);
+  const [hotDeals, setHotDeals] = useState(true);
+  const [bestSeller, setBestSeller] = useState(true);
 
   // Color selection state
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [currentColor, setCurrentColor] = useState('#ffffff');
+  // const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  // const [currentColor, setCurrentColor] = useState('#ffffff');
+  const [productImage, setProductImage] = useState('');
+  console.log(productImage);
 
   useEffect(() => {
     setHasMounted(true); // Ensure the component is only rendered after mounting
 
     const fetchData = async () => {
       try {
-        const categoriesResponse = await axios.get(`${BASE_URL}/category`);
-        const brandsResponse = await axios.get(`${BASE_URL}/brand`);
+        const categoriesResponse = await axios.get(
+          `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getcategories`,
+        );
+        const brandsResponse = await axios.get(
+          `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getbrands`,
+        );
         setCategories(categoriesResponse.data);
         setBrands(brandsResponse.data);
       } catch (error) {
@@ -48,43 +62,63 @@ export default function AddProductPage() {
 
   if (!hasMounted) return <div>Loading...</div>; // Prevent server-side rendering issues
 
-  const handleColorAdd = () => {
-    if (!selectedColors.includes(currentColor)) {
-      setSelectedColors([...selectedColors, currentColor]);
-    }
-  };
+  // const handleColorAdd = () => {
+  //   if (!selectedColors.includes(currentColor)) {
+  //     setSelectedColors([...selectedColors, currentColor]);
+  //   }
+  // };
 
-  const handleColorRemove = (color: string) => {
-    setSelectedColors(selectedColors.filter((c) => c !== color));
-  };
+  // const handleColorRemove = (color: string) => {
+  //   setSelectedColors(selectedColors.filter((c) => c !== color));
+  // };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const selectedCategory = categories.find(
+      (cat) => cat.categoryName === category,
+    );
+    const selectedBrand = brands.find((br) => br.brandName === brand);
+
     const newProduct = {
       productName,
       productDescription,
-      price: productPrice,
-      category,
-      brand,
-      piece,
-      availableColors: selectedColors,
-      image,
+      productPrice: productPrice,
+      isDiscount: isDiscount,
+      categoryId: selectedCategory?.categoryId,
+      brandId: selectedBrand?.brandId,
+      SKU: piece,
+      quantityInStock: piece,
+      discount: discountPercentage,
+      status: status,
+      bestSeller: bestSeller,
+      hotDeals: hotDeals,
+      // availableColors: selectedColors,
+      // image,
     };
 
-    axios
-      .post(`${BASE_URL}/product`, newProduct)
-      .then(() => {
-        alert('Product added successfully!');
-        setProductName('');
-        setProductDescription('');
-        setProductPrice('');
-        setCategory('');
-        setBrand('');
-        setSelectedColors([]);
-        setImage(null);
-      })
-      .catch((error) => {
-        console.error('Error adding product:', error);
-      });
+    const productResponce = await axios.post(
+      `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/admin/product/addproduct`,
+      newProduct,
+    );
+
+    console.log(productResponce.data);
+
+    const productImageData = {
+      productId: productResponce.data.productId,
+      mediaUrl: productImage,
+    };
+
+    const imageResponce = await axios.post(
+      `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/admin/product/addimage`,
+      productImageData,
+    );
+
+    console.log(imageResponce.data);
+  };
+
+  const handleSaveImage = async () => {
+    // const response = await axios.post(
+    //   `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getcategories`,
+    // );
   };
 
   return (
@@ -93,10 +127,31 @@ export default function AddProductPage() {
         <h1 className="text-xl font-semibold text-gray-700">Add Product</h1>
       </div>
       <div className="flex flex-col items-center space-y-4">
-        <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
-          <span className="text-gray-500">📷</span>
+        <div className="w-24 h-24 overflow:hidden object-fit:cover  bg-gray-200 rounded-full flex items-center justify-center">
+          <span className="text-gray-500">
+            <Image
+              alt="add product image"
+              src={productImage}
+              width={80}
+              height={80}
+            />
+          </span>
         </div>
-        <button className="text-blue-600 hover:underline">Upload Photo</button>
+        {productImage ? (
+          <button
+            onClick={handleSaveImage}
+            className="text-blue-600 hover:underline"
+          >
+            <div className="p-2 text-dashBtnBlue font-semibold flex items-center justify-center gap-2 border-2 border-dashBtnBlue rounded-2xl">
+              <FaCloudUploadAlt />
+              save
+            </div>
+          </button>
+        ) : (
+          <button className="text-blue-600 hover:underline">
+            <ImageUploader setProductImage={setProductImage} />
+          </button>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-12 mt-8 ml-12 mr-16">
@@ -151,7 +206,7 @@ export default function AddProductPage() {
             <option value="">Select a category</option>
             {categories.length > 0 ? (
               categories.map((cat) => (
-                <option key={cat.id} value={cat.categoryName}>
+                <option key={cat.categoryId} value={cat.categoryName}>
                   {cat.categoryName}
                 </option>
               ))
@@ -175,7 +230,7 @@ export default function AddProductPage() {
             <option value="">Select a brand</option>
             {brands.length > 0 ? (
               brands.map((br) => (
-                <option key={br.id} value={br.brandName}>
+                <option key={br.brandId} value={br.brandName}>
                   {br.brandName}
                 </option>
               ))
@@ -199,7 +254,89 @@ export default function AddProductPage() {
           />
         </div>
 
-        <div className="mt-1 mr-16">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Discount
+          </label>
+          <select
+            value={isDiscount.toString()}
+            onChange={(e) => setIsDiscount(e.target.value === 'true')}
+            className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+          >
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+
+        {isDiscount && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Discount Percentage
+            </label>
+            <input
+              type="number"
+              value={discountPercentage}
+              onChange={(e) => setDiscountPercentage(Number(e.target.value))}
+              className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+        )}
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Status
+          </label>
+          <select
+            value={status.toString()}
+            onChange={(e) => setStatus(e.target.value === 'true')}
+            className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+          >
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Hot Deal
+          </label>
+          <select
+            value={hotDeals.toString()}
+            onChange={(e) => setHotDeals(e.target.value === 'true')}
+            className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+          >
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Best Seller
+          </label>
+          <select
+            value={bestSeller.toString()}
+            onChange={(e) => setBestSeller(e.target.value === 'true')}
+            className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+          >
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </div>
+
+        {/* <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Discount Percentage
+          </label>
+          <input
+            type="number"
+            value={piece}
+            onChange={(e) => setPiece(Number(e.target.value))}
+            placeholder="Enter No of Pieces"
+            className="w-full mt-1 px-3 text-gray-700 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
+          />
+        </div> */}
+
+        {/* <div className="mt-1 mr-16">
           <label className="block text-sm font-medium text-gray-700">
             Available Colors
           </label>
@@ -226,7 +363,7 @@ export default function AddProductPage() {
               Add Color
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="mt-8 flex justify-center">

@@ -1,21 +1,105 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaFacebook, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+type Product = {
+  productId: number; // Unique identifier for the product
+  productName: string; // Name of the product
+  productDescription: string; // Detailed description of the product
+  productPrice: number; // Price of the product
+  isDiscount: boolean; // Whether the product has a discount
+  discount: number; // Discount percentage
+  quantityInStock: number; // Number of items in stock
+  status: boolean; // Availability status of the product
+  createdAt: Date | null; // Creation timestamp or null
+  updatedAt: Date | null; // Last update timestamp or null
+  mediaUrl: string; // URL for product media (image or video)
+  category: {
+    categoryId: number; // Unique identifier for the category
+    categoryName: string; // Name of the category
+    categoryDescription: string; // Description of the category
+  };
+  brand: {
+    brandId: number; // Unique identifier for the brand
+    brandName: string; // Name of the brand
+  };
+  sku: string | null; // Stock Keeping Unit identifier or null
+};
 
 const Product: React.FC = () => {
-  const thumbnails = [
-    { src: '/Carrot Sub1.jpg' },
-    { src: '/Carrot Sub2.jpg' },
-    { src: '/Carrot Sub3.jpg' },
-    { src: '/Carrot Sub4.png' },
-  ];
-
-  const [value, setValue] = useState(0.5);
-  const [mainImage, setMainImage] = useState('/Carrot Sub4.png');
+  const { id } = useParams<{ id: string }>();
+  const [product, setProduct] = useState<Product>();
+  const [value, setValue] = useState(1);
   const router = useRouter();
+
+  console.log(id);
+  // const thumbnails = [
+  //   { src: '/Carrot Sub1.jpg' },
+  //   { src: '/Carrot Sub2.jpg' },
+  //   { src: '/Carrot Sub3.jpg' },
+  //   { src: '/Carrot Sub4.png' },
+  // ];
+
+  const fetchProduct = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getproductbyid/${id}`,
+      );
+      console.log(response.data);
+      setProduct(response.data); // Assuming API returns an array of category objects
+      // setError(''); // Clear any previous error
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        // setError('Failed to fetch categories: ' + error.message);
+      } else {
+        // setError('An unexpected error occurred.');
+      }
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct();
+    // fetchProduct();
+  }, [id, fetchProduct]);
+
+  if (!product) return <div>No Product</div>;
+
+  async function handleAddToCart() {
+    try {
+      if (!product) return;
+      const cartItem = {
+        productId: product?.productId,
+        productName: product?.productName,
+        price: setTotalPrice(product.productPrice!, product.discount!) * value,
+        quantity: value,
+        userId: 1,
+        productImage: product?.mediaUrl,
+      };
+
+      const responseOfAddingCart = await axios.post(
+        'http://localhost:8082/api/v1/cart/add',
+        cartItem,
+      );
+
+      if (responseOfAddingCart.data) {
+        toast.success('Item added to cart');
+      }
+
+      console.log(cartItem);
+    } catch (err) {
+      console.log(err);
+      toast.error('failed to add item to cart');
+    }
+  }
+
+  // const [mainImage, setMainImage] = useState('/Carrot Sub4.png');
 
   const increaseValue = () => {
     setValue((prev) => parseFloat((prev + 0.1).toFixed(1)));
@@ -24,6 +108,13 @@ const Product: React.FC = () => {
   const decreaseValue = () => {
     setValue((prev) => (prev > 0 ? parseFloat((prev - 0.1).toFixed(1)) : 0));
   };
+
+  console.log(product);
+
+  function setTotalPrice(price: number, discount: number) {
+    const totalPrice = price - (price * discount) / 100;
+    return totalPrice;
+  }
 
   return (
     <div>
@@ -59,7 +150,7 @@ const Product: React.FC = () => {
         <div className="flex flex-col items-center md:w-1/2 mr-12">
           <div className="border-4 border-[#4CAF50] p-4 relative">
             <Image
-              src={mainImage}
+              src={product.mediaUrl}
               alt="Carrot"
               width={500}
               height={500}
@@ -67,7 +158,7 @@ const Product: React.FC = () => {
             />
           </div>
 
-          <div className="flex space-x-4 mt-4">
+          {/* <div className="flex space-x-4 mt-4">
             {thumbnails.map((thumbnail, index) => (
               <div
                 key={index}
@@ -83,13 +174,18 @@ const Product: React.FC = () => {
                 />
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
 
         <div className="md:w-1/2 flex flex-col space-y-6 ">
-          <h2 className="text-4xl font-bold">Carrots</h2>
-          <p className="text-gray-500">FreshMart#915007</p>
-          <p className="text-2xl font-semibold text-gray-800">Rs. 190</p>
+          <h2 className="text-4xl font-bold">{product.productName}</h2>
+          <p className="text-gray-500">FreshMart#{product.productId}</p>
+          <p className="text-2xl font-semibold text-gray-800">
+            Rs.{setTotalPrice(product.productPrice, product.discount)}
+            <span className="text-xl line-through text-gray-400 ml-10">
+              Rs. {product?.productPrice}
+            </span>
+          </p>
 
           <div className="flex items-center bg-transparent rounded-full overflow-hidden">
             <button
@@ -112,16 +208,17 @@ const Product: React.FC = () => {
             >
               +
             </button>
-            <button className="bg-[#4CAF50] text-white px-6 py-2 rounded-md ml-4">
+            <button
+              onClick={handleAddToCart}
+              className="bg-[#4CAF50] text-white px-6 py-2 rounded-md ml-4"
+            >
               Add to cart
             </button>
           </div>
 
           <div className="flex gap-6 ">
-            <p className="text-gray-500 font-semibold">Tags :</p>
-            <p className="text-[#4CAF50]">
-              Vegetables, Upcountry vegetables, Roots
-            </p>
+            <p className="text-gray-500 font-semibold">Category :</p>
+            <p className="text-[#4CAF50]">{product?.category.categoryName}</p>
           </div>
 
           <div className="flex items-center gap-6 ">

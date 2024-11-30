@@ -12,43 +12,69 @@ export default function BrandPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const BASE_URL = 'http://localhost:3001';
+  // const BASE_URL = 'http://localhost:3001';
+
+  const fetchBrands = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getbrands`,
+      );
+      setBrands(response.data);
+      console.log(response.data);
+      setError(''); // Clear any previous error
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setError('Failed to fetch brands: ' + error.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     // Fetch brands when the component mounts
-    const fetchBrands = async () => {
-      try {
-        const response = await axios.get<{ id: number; brandName: string }[]>(
-          `${BASE_URL}/brand`,
-        );
-        setBrands(response.data); // Assuming API returns an array of objects with { id, brandName }
-        setError(''); // Clear any previous error
-      } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          setError('Failed to fetch brands: ' + error.message);
-        } else {
-          setError('An unexpected error occurred.');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
 
     fetchBrands();
   }, []); // Fetch only once on component mount
 
+  const addBrand = async () => {
+    const data = {
+      brandName: newBrand,
+    };
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/admin/product/addbrand`,
+        data,
+      );
+      console.log(response.data);
+      // setBrands(response.data);
+      setNewBrand('');
+      fetchBrands();
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setError('Failed to add brand: ' + error.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    }
+  };
+
   const handleAddBrand = async () => {
     if (newBrand.trim()) {
       try {
-        const response = await axios.post<{ id: number; brandName: string }>(
-          `${BASE_URL}/brand`,
-          {
-            brandName: newBrand, // Assuming API expects { brandName }
-          },
-        );
-        setBrands((prevBrands) => [...prevBrands, response.data]); // Append new brand object to the list
-        setNewBrand('');
-        setError(''); // Clear any previous error
+        addBrand();
+        // const response = await axios.post<{ id: number; brandName: string }>(
+        //   `${BASE_URL}/brand`,
+        //   {
+        //     brandName: newBrand, // Assuming API expects { brandName }
+        //   },
+        // );
+        // setBrands((prevBrands) => [...prevBrands, response.data]); // Append new brand object to the list
+        // setNewBrand('');
+        // setError(''); // Clear any previous error
       } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
           setError('Failed to add brand: ' + error.message);
@@ -67,11 +93,11 @@ export default function BrandPage() {
     return <div className="text-red-500">Error: {error}</div>;
   }
   const handleCategoryClick = () => {
-    router.push('/admin/products/addNewCategory');
+    router.push('/admin/products/addNewcategory');
   };
 
   const handleAddProductClick = () => {
-    router.push('/admin/products/addProduct');
+    router.push('/admin/products/addproduct');
   };
   return (
     <div className="h-full bg-white rounded-lg p-8">
