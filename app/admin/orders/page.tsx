@@ -1,5 +1,6 @@
-import React from 'react';
 import OrderViewForAdmin from '@/components/order/OrderViewForAdmin';
+import React from 'react';
+// import OrderViewForAdmin from '@/components/order/OrderViewForAdmin';
 
 const Orders = () => {
   return <OrderViewForAdmin />;

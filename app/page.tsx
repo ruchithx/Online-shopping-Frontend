@@ -29,6 +29,15 @@ export default async function Home() {
     console.log(err);
   }
 
+  // const paymentDetails = {
+  //   items: 'Event Name',
+  //   oder_id: '1',
+  //   fullAmount: '100',
+  //   currency: 'LKR',
+  //   address: '',
+  //   userId: 1,
+  // };
+
   return (
     <div className="bg-SoftWhite">
       <UnderNavbar />
@@ -39,6 +48,14 @@ export default async function Home() {
       <BestSellsSection
         bestSellesProducts={bestSellesProducts ? bestSellesProducts : []}
       />
+      {/* <Pay
+        item={paymentDetails?.items}
+        orderId={paymentDetails?.oder_id}
+        amount={paymentDetails.fullAmount}
+        currency={paymentDetails?.currency}
+        address={paymentDetails?.address}
+        userId={paymentDetails?.userId}
+      /> */}
     </div>
   );
 }
