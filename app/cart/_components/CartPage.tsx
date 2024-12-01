@@ -4,8 +4,9 @@ import axios from 'axios';
 import CartTable from '../_components/CartTable';
 import { CartItem } from '../types/cart';
 import '../../../app/globals.css';
-// import Navbar from '@/app/product/components/NavBar';
 import UnderNavbar from '@/app/product/components/Undernavbar';
+// import Navbar from '@/app/product/components/NavBar';
+// import UnderNavbar from '@/app/product/components/Undernavbar';
 
 const CartPage: React.FC = () => {
   const [items, setItems] = useState<CartItem[]>([]);
