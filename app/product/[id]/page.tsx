@@ -45,29 +45,29 @@ const Product: React.FC = () => {
   //   { src: '/Carrot Sub4.png' },
   // ];
 
-  const fetchProduct = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getproductbyid/${id}`,
-      );
-      console.log(response.data);
-      setProduct(response.data); // Assuming API returns an array of category objects
-      // setError(''); // Clear any previous error
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        // setError('Failed to fetch categories: ' + error.message);
-      } else {
-        // setError('An unexpected error occurred.');
-      }
-    } finally {
-      // setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getproductbyid/${id}`,
+        );
+        console.log(response.data);
+        setProduct(response.data); // Assuming API returns an array of category objects
+        // setError(''); // Clear any previous error
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          // setError('Failed to fetch categories: ' + error.message);
+        } else {
+          // setError('An unexpected error occurred.');
+        }
+      } finally {
+        // setLoading(false);
+      }
+    };
+
     fetchProduct();
     // fetchProduct();
-  }, [id, fetchProduct]);
+  }, [id]);
 
   if (!product) return <div>No Product</div>;
 
