@@ -7,6 +7,7 @@ import '../../../app/globals.css';
 import UnderNavbar from '@/app/product/components/Undernavbar';
 import CartSummary from '../_components/CartSummary';
 import { CartSummary as CartSummaryType } from '../types/cart';
+import Footer from '../../../components/layouts/Footer';
 // import Navbar from '@/app/product/components/NavBar';
 // import UnderNavbar from '@/app/product/components/Undernavbar';
 
@@ -119,6 +120,7 @@ const CartPage: React.FC = () => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { CartItem } from '../types/cart';
 import Image from 'next/image';
+import { FaTrash } from 'react-icons/fa';
 
 interface CartTableProps {
   items: CartItem[];
@@ -81,7 +82,7 @@ const CartTable: React.FC<CartTableProps> = ({
                     onClick={() => onRemove(item.cartId)}
                     className=" text-[#ff686b] ml-10 rounded hover:text-red-600 font-bold"
                   >
-                    Remove
+                    <FaTrash />
                   </button>
                 </td>
               </tr>
