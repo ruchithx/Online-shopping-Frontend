@@ -20,15 +20,15 @@ const CartTable: React.FC<CartTableProps> = ({
           <tr>
             <th>Product Name</th>
             <th>Price</th>
-            <th>Qty</th>
-            <th>Discount</th>
-            <th>Total</th>
+            <th>Quantity</th>
+            {/* <th>Discount</th> */}
+            {/* <th>Total</th> */}
             <th>Action</th>
           </tr>
         </thead>
         <tbody className="text-black justify-items-center ">
           {items.map((item) => {
-            const totalAfterDiscount = item.price;
+            // const totalAfterDiscount = item.price;
             return (
               <tr key={item.productId} className="border-b">
                 <td className=" flex items-center transform translate-y-1  ">
@@ -73,9 +73,9 @@ const CartTable: React.FC<CartTableProps> = ({
                 {/* <td className="p-4 font-bold text-[#4caf50]  ">
                   Rs. {item.discount.toFixed(2)}
                 </td> */}
-                <td className="p-4 font-semibold ">
+                {/* <td className="p-4 font-semibold ">
                   Rs. {totalAfterDiscount.toFixed(2)}
-                </td>
+                </td> */}
                 <td className="p-4">
                   <button
                     onClick={() => onRemove(item.cartId)}
