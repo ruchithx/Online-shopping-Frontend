@@ -6,8 +6,9 @@ import SupersaverSection from '@/components/SupersaverSection';
 import BestSellsSection from '@/components/BestSellsSection';
 import axios from 'axios';
 import { Product } from './product/category/[name]/page';
+import Pay from '@/components/Pay';
 // import Product from './product/[id]/page';
-
+// import Pay from '@/components/Pay';
 export default async function Home() {
   let discountHaveProducts;
   let bestSellesProducts;
@@ -29,14 +30,24 @@ export default async function Home() {
     console.log(err);
   }
 
-  // const paymentDetails = {
-  //   items: 'Event Name',
-  //   oder_id: '1',
-  //   fullAmount: '100',
-  //   currency: 'LKR',
-  //   address: '',
-  //   userId: 1,
-  // };
+  const paymentDetails = {
+    items: 'Event Name',
+    fullAmount: '100',
+    currency: 'LKR',
+    address: '',
+    userId: 1,
+  };
+
+  const order = [
+    {
+      productId: 1,
+      quantity: 2,
+    },
+    {
+      productId: 2,
+      quantity: 4,
+    },
+  ];
 
   return (
     <div className="bg-SoftWhite">
@@ -48,14 +59,21 @@ export default async function Home() {
       <BestSellsSection
         bestSellesProducts={bestSellesProducts ? bestSellesProducts : []}
       />
-      {/* <Pay
+      <Pay
+        orderId="1"
         item={paymentDetails?.items}
-        orderId={paymentDetails?.oder_id}
+        order={order}
         amount={paymentDetails.fullAmount}
         currency={paymentDetails?.currency}
         address={paymentDetails?.address}
         userId={paymentDetails?.userId}
-      /> */}
+        first_name=""
+        last_name=""
+        email=""
+        phone=""
+        city=""
+        country=""
+      />
     </div>
   );
 }
