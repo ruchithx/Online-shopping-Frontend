@@ -210,11 +210,14 @@ const Pay = (props: PayProps) => {
 
       <button
         onClick={pay}
-        className="flex button w-20 p-[1px] bg-[#D47151] rounded-2xl items-center  "
+        // className={`w-full text-white font-bold py-2 rounded-lg ${
+        //   isAddressSaved
+        //     ? 'bg-[#ff686b] hover:bg-[#ff686b]'
+        //     : 'bg-gray-400 cursor-not-allowed'
+        // }`}
+        className="w-full text-white font-bold py-2 rounded-lg bg-[#ff686b] hover:bg-[#ff686b]"
       >
-        <div className="font-medium xl:text-lg text-md text-white text-left leading-tight ml-4">
-          Pay
-        </div>
+        Proceed to checkout
       </button>
 
       {/* <Button onClick={generateHash}>click</Button> */}

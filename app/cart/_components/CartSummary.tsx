@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CartSummary as CartSummaryType } from '../types/cart';
+import Pay from '@/components/Pay';
 
 interface CartSummaryProps {
   summary: CartSummaryType;
@@ -7,14 +8,34 @@ interface CartSummaryProps {
 
 const CartSummary: React.FC<CartSummaryProps> = ({ summary }) => {
   const [address, setAddress] = useState('');
-  const [isAddressSaved, setIsAddressSaved] = useState(false);
-  const handleSaveAddress = () => {
-    if (address.trim()) {
-      setIsAddressSaved(true);
-    } else {
-      alert('Please enter a valid address.');
-    }
+
+  // const handleSaveAddress = () => {
+  //   if (address.trim()) {
+  //     setIsAddressSaved(true);
+  //   } else {
+  //     alert('Please enter a valid address.');
+  //   }
+  // };
+
+  const paymentDetails = {
+    items: 'Event Name',
+    fullAmount: summary.total.toFixed(2),
+    currency: 'LKR',
+    address: address,
+    userId: 1,
   };
+
+  const order = [
+    {
+      productId: 1,
+      quantity: 2,
+    },
+    {
+      productId: 2,
+      quantity: 4,
+    },
+  ];
+
   return (
     <div className="bg-green-100 p-6  shadow-md text-black text-sm space-y-4 ">
       <div className="space-y-2">
@@ -48,25 +69,34 @@ const CartSummary: React.FC<CartSummaryProps> = ({ summary }) => {
         className="w-full border rounded-lg px-4 py-2 bg-white text-black"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
-        disabled={isAddressSaved}
       />
-      <button
-        className="w-full bg-[#4CAF50] text-white font-bold py-2 rounded-lg hover:bg-green-700"
-        onClick={handleSaveAddress}
-        disabled={isAddressSaved}
-      >
-        Save
-      </button>
-      <button
+
+      {/* <button
         className={`w-full text-white font-bold py-2 rounded-lg ${
           isAddressSaved
             ? 'bg-[#ff686b] hover:bg-[#ff686b]'
             : 'bg-gray-400 cursor-not-allowed'
         }`}
         disabled={!isAddressSaved}
+        onClick={handlePayment}
       >
         Proceed to Checkout
-      </button>
+      </button> */}
+      <Pay
+        orderId="1"
+        item={paymentDetails?.items}
+        order={order}
+        amount={paymentDetails.fullAmount}
+        currency={paymentDetails?.currency}
+        address={paymentDetails?.address}
+        userId={paymentDetails?.userId}
+        first_name=""
+        last_name=""
+        email=""
+        phone=""
+        city=""
+        country=""
+      />
     </div>
   );
 };
