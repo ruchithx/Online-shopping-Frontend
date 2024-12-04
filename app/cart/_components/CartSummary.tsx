@@ -18,7 +18,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({ summary }) => {
   // };
 
   const paymentDetails = {
-    items: 'Event Name',
+    items: 'FreshMart Items',
     fullAmount: summary.total.toFixed(2),
     currency: 'LKR',
     address: address,
