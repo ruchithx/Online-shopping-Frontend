@@ -8,7 +8,6 @@ import { Providers } from '@/components/Provider';
 import { Toaster } from 'react-hot-toast';
 import TostifyProvider from '@/provider/TostifyProvider';
 
-
 // Local Fonts
 // const geistSans = localFont({
 //   src: './fonts/GeistVF.woff',
@@ -46,9 +45,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${roboto.variable} antialiased`}>
         <Toaster />
         <Providers>
           <Navbar />

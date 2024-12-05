@@ -7,7 +7,7 @@ import SearchBar from './SearchBar';
 import AuthButton from '../../../components/ui/AuthButton';
 
 import Link from 'next/link';
-        
+
 const Navbar: FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -73,12 +73,10 @@ const Navbar: FC = () => {
                   <p className="text-[#FF6B6B] text-sm">${21}</p>
                 </div>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <AuthButton />
-              </div>
-            </div>
-
             </Link>
+            <div style={{ textAlign: 'center' }}>
+              <AuthButton />
+            </div>
 
             <div className="relative ">
               <div
