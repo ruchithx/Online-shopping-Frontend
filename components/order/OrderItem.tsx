@@ -1,31 +1,38 @@
 import React from 'react';
-import Image from 'next/image';
-const product = {
-  id: 1,
-  image: '/products/iphone images.jpeg', // replace with actual image path
-  name: 'Apple Watch Series 4',
-  category: 'Digital Product',
-  price: '$690.00',
-  quantity: 63,
-};
+import { productType } from '@/Type/Product_Type';
 
-export default function OrderItem() {
-  return (
+export default function OrderItem({
+  product,
+  quantity,
+}: {
+  product: productType;
+  quantity: number;
+}) {
+  return product ? (
     <tr>
       <td className="px-4 py-4">
-        <Image
-          src={product.image}
-          alt={product.name}
-          width={48}
-          height={48}
-          className="rounded-lg object-cover"
-        />
+        {product?.mediaUrl ? (
+          <div
+            className="size-20 bg-cover bg-center rounded-lg"
+            style={{ backgroundImage: `url(${product.mediaUrl})` }}
+          ></div>
+        ) : (
+          <div className="size-20 bg-gray-200 rounded-lg"></div>
+        )}
       </td>
-      <td className="px-4 py-4">{product.name}</td>
-      <td className="px-4 py-4">{product.category}</td>
-      <td className="px-4 py-4">{product.price}</td>
-      <td className="px-4 py-4">{product.quantity}</td>
-      <td className="px-4 py-4">{product.price}</td>
+      <td className="px-4 py-4">{product?.productName}</td>
+      <td className="px-4 py-4">{product?.productPrice}</td>
+      <td className="px-4 py-4">{quantity}</td>
+      <td className="px-4 py-4">{product?.discount || '-'}</td>
+      <td className="px-4 py-4">
+        {product?.discount
+          ? quantity *
+            (product?.productPrice -
+              product?.productPrice * (product?.discount / 100))
+          : quantity * product?.productPrice}
+      </td>
     </tr>
+  ) : (
+    <></>
   );
 }

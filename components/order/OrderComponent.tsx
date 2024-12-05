@@ -12,6 +12,7 @@ export default function OrderComponent() {
   const id = params.id;
 
   const [order, setOrder] = useState<Order>();
+  const [roughTotal, setRoughTotal] = useState<number>(0);
 
   useEffect(() => {
     // Fetch data from API
@@ -24,6 +25,16 @@ export default function OrderComponent() {
 
     fetchOrders();
   }, [id]);
+
+  useEffect(() => {
+    if (order) {
+      let total = 0;
+      order.orderItems.forEach((orderItem) => {
+        total += orderItem.product?.productPrice * orderItem.quantity;
+      });
+      setRoughTotal(total);
+    }
+  }, [order]);
 
   if (order == null) {
     return <Loader />;
@@ -39,16 +50,20 @@ export default function OrderComponent() {
             <tr className=" text-gray-700 border">
               <th className="px-4 py-2 text-left">Image</th>
               <th className="px-4 py-2 text-left">Product Name</th>
-              <th className="px-4 py-2 text-left">Category</th>
               <th className="px-4 py-2 text-left">Price</th>
               <th className="px-4 py-2 text-left">Piece</th>
-              <th className="px-4 py-2 text-left">Total</th>
+              <th className="px-4 py-2 text-left">Discount(%)</th>
+              <th className="px-4 py-2 text-left">Total (with discount)</th>
             </tr>
           </thead>
 
           <tbody>
             {order.orderItems.map((orderItem) => (
-              <OrderItem key={orderItem.id} />
+              <OrderItem
+                key={orderItem.id}
+                product={orderItem.product}
+                quantity={orderItem.quantity}
+              />
             ))}
           </tbody>
         </table>
@@ -76,14 +91,14 @@ export default function OrderComponent() {
         <div>
           <div className="flex justify-between space-y-2 mb-4">
             <h3 className="text-gray-600 ">Product total</h3>
-            <p className="text-gray-600 hover:text-green-600">
-              Rs:{order?.totalPrice}
-            </p>
+            <p className="text-gray-600 hover:text-green-600">{roughTotal}</p>
           </div>
           <div className="border-b border-gray-300 mb-4 "></div>
           <div className="flex justify-between mb-4 space-y-2 ">
-            <h3 className="text-gray-600 ">Delivery fee</h3>
-            <p className="text-gray-600 hover:text-green-600">Free</p>
+            <h3 className="text-gray-600 ">Total Discount</h3>
+            <p className="text-gray-600 hover:text-green-600">
+              {roughTotal - order.totalPrice}
+            </p>
           </div>
           <div className="border-b border-gray-300 mb-4"></div>
           <div className="flex justify-between space-y-2">

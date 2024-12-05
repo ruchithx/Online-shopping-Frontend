@@ -1,4 +1,5 @@
 import { Order } from '@/Type/OrderTypes';
+import Link from 'next/link';
 import React from 'react';
 
 export default function OrdersAdmin({ orderData }: { orderData: Order }) {
@@ -30,6 +31,14 @@ export default function OrdersAdmin({ orderData }: { orderData: Order }) {
         >
           {orderData.status}
         </span>
+      </td>
+      <td>
+        <Link
+          href={`/orders/${orderData.id}`}
+          className="text-white bg-Green px-4 py-1  rounded-lg shadow hover:bg-HoverGreen"
+        >
+          Details
+        </Link>
       </td>
     </tr>
   );
