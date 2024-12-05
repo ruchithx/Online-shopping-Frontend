@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
 
 type Product = {
   productId: number; // Unique identifier for the product
@@ -36,6 +37,9 @@ const Product: React.FC = () => {
   const [product, setProduct] = useState<Product>();
   const [value, setValue] = useState(1);
   const router = useRouter();
+  const { data: session } = useSession(); // Correctly typed from next-auth
+  console.log(session?.user?.id);
+  const userId = session?.user?.id;
 
   console.log(id);
   // const thumbnails = [
@@ -79,7 +83,7 @@ const Product: React.FC = () => {
         productName: product?.productName,
         price: setTotalPrice(product.productPrice!, product.discount!) * value,
         quantity: value,
-        userId: 1,
+        userId: userId,
         productImage: product?.mediaUrl,
       };
 
