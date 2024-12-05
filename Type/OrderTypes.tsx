@@ -1,3 +1,5 @@
+import { productType } from './Product_Type';
+
 export interface Order {
   id: number;
   address: string;
@@ -11,4 +13,5 @@ export interface OrderItem {
   id: number;
   productId: number;
   quantity: number;
+  product: productType;
 }

@@ -1,45 +1,51 @@
-import React from 'react';
+'use client';
+import Loader from '@/components/Loader';
+import { Order } from '@/Type/OrderTypes';
+import axios from 'axios';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 export default function PastOrders() {
+  const [orders, setOrders] = useState<Order[] | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      setLoading(true);
+      try {
+        const ordersData = await axios.get(
+          'http://localhost:8081/api/v1/orders?userId=10',
+        );
+        setOrders(ordersData.data);
+        console.log(ordersData.data);
+      } catch (error) {
+        console.error(error);
+        console.log('Error', error);
+      }
+    };
+    fetchOrders();
+    setLoading(false);
+  }, []);
+
+  if (loading || !orders) {
+    return <Loader />;
+  }
+
+  if (orders?.length === 0) {
+    return (
+      <div
+        className="bg-red-100 border grid place-content-center text-center border-red-400 text-red-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
+        <strong className="font-bold">No Orders Found!</strong>
+        <span className="block sm:inline">
+          You have not placed any orders yet.
+        </span>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col md:flex-row  ">
-      {/* Sidebar */}
-      {/* <aside className="md:w-1/6 w-full p-4 bg-white shadow-md rounded-lg mb-4 md:mb-0">
-        <div className="space-y-4">
-          <button className="text-left w-full">
-            <div className="text-lg font-semibold text-gray-700">
-              Manage My Account
-            </div>
-          </button>
-          <ul className="text-gray-600">
-            <li className=" pl-4 cursor-pointer hover:text-green-600">
-              My Profile
-            </li>
-            <li className="pl-4 cursor-pointer hover:text-green-600">
-              Change Password
-            </li>
-          </ul>
-
-          <button className="text-left w-full">
-            <div className="text-lg font-semibold text-gray-700">My Orders</div>
-          </button>
-          <ul className="text-gray-600">
-            <li className="pl-4 cursor-pointer hover:text-green-600">
-              Past Orders
-            </li>
-            <li className="pl-4 cursor-pointer hover:text-green-600">
-              Track My Orders
-            </li>
-          </ul>
-
-          <button className="text-left w-full">
-            <div className="text-lg font-semibold text-gray-700">
-              My Wishlist
-            </div>
-          </button>
-        </div>
-      </aside> */}
-
       <main className="flex-1 bg-white  rounded-lg p-4 md:ml-4 text-center">
         <div className="overflow-x-auto">
           <div className="pb-4">
@@ -52,41 +58,22 @@ export default function PastOrders() {
             </div>
           </div>
           <div className="space-y-4">
-            {[
-              {
-                id: 'K1001',
-                date: '2024/10/25',
-                address: '6 A, Thihagoda, Matara.',
-                amount: 'Rs.2500.00',
-                status: 'Delivery',
-              },
-              {
-                id: 'K1002',
-                date: '2024/10/27',
-                address: '6 A, Thihagoda, Matara.',
-                amount: 'Rs.3500.00',
-                status: 'Delivery',
-              },
-              {
-                id: 'K1003',
-                date: '2024/10/30',
-                address: '6 A, Thihagoda, Matara.',
-                amount: 'Rs.1500.00',
-                status: 'Delivery',
-              },
-            ].map((order) => (
+            {orders?.map((order) => (
               <div
                 key={order.id}
                 className="grid grid-cols-5 items-center text-gray-800  bg-slate-100 px-4 py-4 rounded-lg shadow-sm font-medium"
               >
                 <p>{order.id}</p>
-                <p>{order.date}</p>
+                <p>{order.createdAt.substring(0, 10)}</p>
                 <p>{order.address}</p>
-                <p>{order.amount}</p>
+                <p>{order.totalPrice}</p>
                 <div className="flex items-center space-x-4">
-                  <button className="text-white bg-green-500 px-4  rounded-lg shadow hover:bg-green-600">
+                  <Link
+                    href={`/orders/${order.id}`}
+                    className="text-white bg-Green px-4  rounded-lg shadow hover:bg-HoverGreen"
+                  >
                     Details
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

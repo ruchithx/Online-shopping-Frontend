@@ -1,3 +1,8 @@
 export interface productType {
-  name: string;
+  productId: number;
+  productPrice: number;
+  isDiscount: boolean;
+  discount: number;
+  productName: string;
+  mediaUrl: string;
 }
