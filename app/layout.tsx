@@ -4,6 +4,8 @@ import { Roboto } from 'next/font/google';
 import React from 'react';
 import './globals.css';
 import Navbar from '@/app/product/components/NavBar';
+import { Providers } from '@/components/Provider';
+import { Toaster } from 'react-hot-toast';
 import TostifyProvider from '@/provider/TostifyProvider';
 
 // Local Fonts
@@ -43,10 +45,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${roboto.variable} antialiased`}>
-        <Navbar />
-        {children}
-        <TostifyProvider />
+      <body className={`${roboto.variable} antialiased`}>
+        <Toaster />
+        <Providers>
+          <Navbar />
+
+          {children}
+        </Providers>
       </body>
     </html>
   );

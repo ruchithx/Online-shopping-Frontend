@@ -4,6 +4,8 @@ import { useState, FC } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { FiUser, FiBox, FiLogOut } from 'react-icons/fi';
 import SearchBar from './SearchBar';
+import AuthButton from '../../../components/ui/AuthButton';
+
 import Link from 'next/link';
 
 const Navbar: FC = () => {
@@ -72,6 +74,9 @@ const Navbar: FC = () => {
                 </div>
               </div>
             </Link>
+            <div style={{ textAlign: 'center' }}>
+              <AuthButton />
+            </div>
 
             <div className="relative ">
               <div
