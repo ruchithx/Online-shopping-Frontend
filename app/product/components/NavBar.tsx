@@ -4,7 +4,7 @@ import { useState, FC } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { FiUser, FiBox, FiHeart, FiLogOut } from 'react-icons/fi';
 import SearchBar from './SearchBar';
-
+import AuthButton from '../../../components/ui/AuthButton';
 const Navbar: FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -65,6 +65,9 @@ const Navbar: FC = () => {
                   My Cart
                 </span>
                 <p className="text-[#FF6B6B] text-sm">${21}</p>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <AuthButton />
               </div>
             </div>
 
