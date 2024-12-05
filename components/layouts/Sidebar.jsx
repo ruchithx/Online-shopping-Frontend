@@ -13,10 +13,7 @@ const Sidebar = () => {
             <li>
               <details className="group [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                  <span className="text-sm font-medium">
-                    {' '}
-                    Manage My Account{' '}
-                  </span>
+                  <span className="text-sm font-medium">Manage My Account</span>
 
                   <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                     <svg
@@ -72,20 +69,20 @@ const Sidebar = () => {
                 </summary>
 
                 <ul className="mt-2 space-y-1 px-4">
-                  <Link href={'/user/orders'}>
+                  <li>
+                    <Link
+                      className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      href={'/user/orders'}
+                    >
+                      Current Orders
+                    </Link>
+                  </li>
+
+                  <Link href={'/user/orders/past'}>
                     <li className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                       Past Orders
                     </li>
                   </Link>
-
-                  {/* <li>
-                    <Link
-                      className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      href={'#'}
-                    >
-                      Track My Orders
-                    </Link>
-                  </li> */}
                 </ul>
               </details>
             </li>

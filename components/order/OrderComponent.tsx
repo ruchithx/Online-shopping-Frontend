@@ -17,7 +17,7 @@ export default function OrderComponent() {
     // Fetch data from API
     const fetchOrders = async () => {
       const response = await axios.get(
-        'http://localhost:8080/api/v1/orders/' + id,
+        'http://localhost:8081/api/v1/orders/' + id,
       );
       setOrder(response.data);
     };
