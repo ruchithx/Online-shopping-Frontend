@@ -1,11 +1,12 @@
 import React from 'react';
 import { CartItem } from '../types/cart';
 import Image from 'next/image';
+import { FaTrash } from 'react-icons/fa';
 
 interface CartTableProps {
   items: CartItem[];
-  onUpdateQuantity: (itemId: number, quantity: number) => void;
-  onRemove: (itemId: number) => void;
+  onUpdateQuantity: (cartId: number, quantity: number) => void;
+  onRemove: (cartId: number) => void;
 }
 
 const CartTable: React.FC<CartTableProps> = ({
@@ -20,24 +21,24 @@ const CartTable: React.FC<CartTableProps> = ({
           <tr>
             <th>Product Name</th>
             <th>Price</th>
-            <th>Qty</th>
-            <th>Discount</th>
-            <th>Total</th>
+            <th>Quantity</th>
+            {/* <th>Discount</th> */}
+            {/* <th>Total</th> */}
             <th>Action</th>
           </tr>
         </thead>
         <tbody className="text-black justify-items-center ">
           {items.map((item) => {
-            const totalAfterDiscount =
-              item.price * item.quantity - item.discount * item.quantity;
+            // const totalAfterDiscount = item.price;
             return (
-              <tr key={item.itemId} className="border-b">
+              <tr key={item.productId} className="border-b">
                 <td className=" flex items-center transform translate-y-1  ">
                   <Image
-                    src={item.imageUrl}
+                    src={item.productImage}
                     alt="image"
                     className="w-12 h-12 object-cover rounded-lg m-3 "
                     width={48}
+                    height={48}
                   />
                   <span>{item.productName}</span>
                 </td>
@@ -46,7 +47,7 @@ const CartTable: React.FC<CartTableProps> = ({
                   <button
                     onClick={() =>
                       onUpdateQuantity(
-                        item.itemId,
+                        item.cartId,
                         Math.max(1, item.quantity - 1),
                       )
                     }
@@ -57,31 +58,31 @@ const CartTable: React.FC<CartTableProps> = ({
                   <input
                     value={item.quantity}
                     onChange={(e) =>
-                      onUpdateQuantity(item.itemId, parseInt(e.target.value))
+                      onUpdateQuantity(item.cartId, parseInt(e.target.value))
                     }
                     className="w-8 text-center bg-green-100"
                   />
                   <button
                     onClick={() =>
-                      onUpdateQuantity(item.itemId, item.quantity + 1)
+                      onUpdateQuantity(item.cartId, item.quantity + 1)
                     }
                     className="bg-[#4caf50] px-3 py-1 rounded hover:bg-green-700"
                   >
                     +
                   </button>
                 </td>
-                <td className="p-4 font-bold text-[#4caf50]  ">
+                {/* <td className="p-4 font-bold text-[#4caf50]  ">
                   Rs. {item.discount.toFixed(2)}
-                </td>
-                <td className="p-4 font-semibold ">
+                </td> */}
+                {/* <td className="p-4 font-semibold ">
                   Rs. {totalAfterDiscount.toFixed(2)}
-                </td>
+                </td> */}
                 <td className="p-4">
                   <button
-                    onClick={() => onRemove(item.itemId)}
+                    onClick={() => onRemove(item.cartId)}
                     className=" text-[#ff686b] ml-10 rounded hover:text-red-600 font-bold"
                   >
-                    Remove
+                    <FaTrash />
                   </button>
                 </td>
               </tr>

@@ -2,9 +2,12 @@
 import Image from 'next/image';
 import { useState, FC } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { FiUser, FiBox, FiHeart, FiLogOut } from 'react-icons/fi';
+import { FiUser, FiBox, FiLogOut } from 'react-icons/fi';
 import SearchBar from './SearchBar';
 import AuthButton from '../../../components/ui/AuthButton';
+
+import Link from 'next/link';
+        
 const Navbar: FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -14,25 +17,27 @@ const Navbar: FC = () => {
 
   return (
     <div>
-      <div className="bg-[#F4F4F9] shadow-md py-4 w-screen ">
+      <div className="bg-[#F4F4F9] shadow-md py-4 ">
         <div className="flex items-center ">
           <div className="flex items-center w-3/5 justify-between">
             {' '}
             <div className="flex items-center ms-12 ">
-              <Image
-                src="/logo.png"
-                alt="Freshmart Logo"
-                width={150}
-                height={150}
-                className="cursor-pointer"
-              />
+              <Link href="/">
+                <Image
+                  src="/logo.png"
+                  alt="Freshmart Logo"
+                  width={150}
+                  height={150}
+                  className="cursor-pointer"
+                />
+              </Link>
             </div>
             <div className="ms-12 ">
               <SearchBar />
             </div>
           </div>
           <div className="flex w-2/5 justify-around items-center">
-            <div className="flex items-center space-x-4 ">
+            {/* <div className="flex items-center space-x-4 ">
               <div className="relative">
                 <Image
                   src="/Wishlist.png"
@@ -46,30 +51,34 @@ const Navbar: FC = () => {
                 </span>
               </div>
               <div className="text-[#1A202C] font-medium text-sm">Wishlist</div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <Image
-                  src="/Cart.png"
-                  alt="Cart Icon"
-                  width={20}
-                  height={20}
-                  className="w-6 h-6"
-                />
-                <span className="absolute -top-2 -right-2 bg-[#FF6B6B] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
-                  1
-                </span>
-              </div>
-              <div>
-                <span className="text-sm font-medium text-[#1A202C]">
-                  My Cart
-                </span>
-                <p className="text-[#FF6B6B] text-sm">${21}</p>
+            </div> */}
+            <Link href="/cart">
+              <div className="flex items-center space-x-4">
+                <div className="relative">
+                  <Image
+                    src="/Cart.png"
+                    alt="Cart Icon"
+                    width={20}
+                    height={20}
+                    className="w-6 h-6"
+                  />
+                  <span className="absolute -top-2 -right-2 bg-[#FF6B6B] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                    1
+                  </span>
+                </div>
+                <div>
+                  <span className="text-sm font-medium text-[#1A202C]">
+                    My Cart
+                  </span>
+                  <p className="text-[#FF6B6B] text-sm">${21}</p>
+                </div>
               </div>
               <div style={{ textAlign: 'center' }}>
                 <AuthButton />
               </div>
             </div>
+
+            </Link>
 
             <div className="relative ">
               <div
@@ -107,15 +116,19 @@ const Navbar: FC = () => {
                   <div className="border-t border-white my-2 w-48"></div>
 
                   <div className="flex flex-col text-[#F4F4F9]">
-                    <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
-                      <FiUser className="mr-2" /> Manage My Account
-                    </button>
-                    <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
-                      <FiBox className="mr-2" /> My Orders
-                    </button>
-                    <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
+                    <Link href="/user/profile">
+                      <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
+                        <FiUser className="mr-2" /> Manage My Account
+                      </button>
+                    </Link>
+                    <Link href="/user/orders">
+                      <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
+                        <FiBox className="mr-2" /> My Orders
+                      </button>
+                    </Link>
+                    {/* <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
                       <FiHeart className="mr-2" /> My Wishlist
-                    </button>
+                    </button> */}
                     <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
                       <FiLogOut className="mr-2" /> Sign Out
                     </button>

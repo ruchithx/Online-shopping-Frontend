@@ -2,20 +2,26 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CartTable from '../_components/CartTable';
-import CartSummary from '../_components/CartSummary';
-import { CartItem, CartSummary as CartSummaryType } from '../types/cart';
+import { CartItem } from '../types/cart';
 import '../../../app/globals.css';
-import Navbar from '@/app/product/components/NavBar';
+import UnderNavbar from '@/app/product/components/Undernavbar';
+import CartSummary from '../_components/CartSummary';
+import { CartSummary as CartSummaryType } from '../types/cart';
+import Footer from '../../../components/layouts/Footer';
+// import Navbar from '@/app/product/components/NavBar';
+// import UnderNavbar from '@/app/product/components/Undernavbar';
 
 const CartPage: React.FC = () => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const userId = 1;
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/cart');
+        const response = await axios.get(
+          `http://localhost:8082/api/v1/cart/${userId}`,
+        );
         setItems(response.data);
         setLoading(false);
       } catch (err) {
@@ -26,41 +32,20 @@ const CartPage: React.FC = () => {
     };
 
     fetchCartItems();
-  }, []);
-  // const addItem = async (newItem: CartItem) => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8080/api/v1/cart/add', {
-  //       cartId: newItem.cartId,
-  //       itemId: newItem.itemId,
-  //       productName: newItem.productName,
-  //       price: newItem.price,
-  //       quantity: newItem.quantity,
-  //       discount: newItem.discount,
-  //     });
+  }, [userId]);
 
-  //     if (response.status === 200) {
-  //       // Update the state with the new item
-  //       setItems((prevItems) => [...prevItems, newItem]);
-  //       console.log('Item added successfully');
-  //     }
-  //   } catch (err) {
-  //     console.error('Error adding item:', err);
-  //     setError('Failed to add item.');
-  //   }
-  // };
-
-  const updateQuantity = async (itemId: number, quantity: number) => {
+  const updateQuantity = async (cartId: number, quantity: number) => {
     try {
       setItems((prevItems) =>
         prevItems.map((item) =>
-          item.itemId === itemId
+          item.cartId === cartId
             ? { ...item, quantity: Math.max(1, quantity) }
             : item,
         ),
       );
 
       await axios.put(
-        `http://localhost:8080/api/v1/cart/update/${itemId}`,
+        `http://localhost:8082/api/v1/cart/update/${cartId}`,
         null,
         {
           params: { quantity: Math.max(1, quantity) },
@@ -73,12 +58,12 @@ const CartPage: React.FC = () => {
     }
   };
 
-  const removeItem = async (itemId: number) => {
+  const removeItem = async (cartId: number) => {
     try {
-      await axios.delete(`http://localhost:8080/api/v1/cart/delete/${itemId}`);
+      await axios.delete(`http://localhost:8082/api/v1/cart/delete/${cartId}`);
 
       setItems((prevItems) =>
-        prevItems.filter((item) => item.itemId !== itemId),
+        prevItems.filter((item) => item.cartId !== cartId),
       );
     } catch (err) {
       console.error('Error deleting item:', err);
@@ -93,11 +78,11 @@ const CartPage: React.FC = () => {
       0,
     );
     const total = items.reduce(
-      (sum, item) => sum + (item.price * item.quantity - item.discount),
+      (sum, item) => sum + item.price * item.quantity,
       0,
     );
     const discount = items.reduce(
-      (sum, item) => sum + item.discount * item.quantity,
+      (sum, item) => sum + item.price * item.quantity,
       0,
     );
 
@@ -108,11 +93,12 @@ const CartPage: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
+      <UnderNavbar />
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="p-6 bg-gray-50 min-h-screen">
           <h2 className="text-2xl font-bold mb-6 text-center text-[#4CAF50]">
-            Your Cart
+            My Cart
           </h2>
           {loading ? (
             <p className="text-center">Loading...</p>
@@ -134,6 +120,7 @@ const CartPage: React.FC = () => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

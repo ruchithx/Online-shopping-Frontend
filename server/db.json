@@ -1,0 +1,87 @@
+{
+  "product": [
+    {
+      "id": "0034",
+      "productName": "mouse",
+      "productDescription": "gaming mouse",
+      "price": "125",
+      "category": "Accessories",
+      "brand": "Apple",
+      "piece": 5,
+      "availableColors": ["#f8e71c", "#d0021b", "#7ed321", "#8b572a"],
+      "image": null
+    },
+
+    {
+      "id": "a1b2",
+      "productName": "keyboard",
+      "productDescription": "mechanical keyboard",
+      "price": "150",
+      "category": "Accessories",
+      "brand": "Sony",
+      "piece": 10,
+      "availableColors": ["#000000", "#ffffff"],
+      "image": null
+    },
+    {
+      "id": "d4e5",
+      "productName": "laptop",
+      "productDescription": "gaming laptop",
+      "price": "2500",
+      "category": "Electronics",
+      "brand": "Samsung",
+      "piece": 3,
+      "availableColors": ["#000000", "#d0021b"],
+      "image": null
+    }
+  ],
+  "category": [
+    {
+      "id": "1",
+      "categoryName": "Electronics",
+      "description": "Electronic devices"
+    },
+    {
+      "id": "2",
+      "categoryName": "Accessories",
+      "description": "Accessories for electronic devices"
+    },
+    {
+      "id": "3",
+      "categoryName": "Clothing",
+      "description": "Clothing items"
+    },
+    {
+      "id": "4",
+      "categoryName": "Shoes",
+      "description": "Shoes"
+    },
+    {
+      "id": "33e0",
+      "categoryName": "Toys",
+      "description": "desc"
+    }
+  ],
+  "brand": [
+    {
+      "id": "1",
+      "brandName": "Apple"
+    },
+    {
+      "id": "2",
+      "brandName": "Samsung"
+    },
+    {
+      "id": "3",
+      "brandName": "Sony"
+    },
+    {
+      "id": "4",
+      "brandName": "Nike"
+    },
+    {
+      "id": "ce79",
+      "brandName": "htc"
+    }
+  ]
+}

@@ -1,10 +1,13 @@
 export interface CartItem {
-  itemId: number;
-  productName: string;
-  price: number;
+  cartId: number;
+  userId: number;
+  productId: number;
   quantity: number;
-  imageUrl: string;
-  discount: number;
+  price: number;
+  productImage: string;
+  productName: string;
+  createdAt: string; // ISO date string format
+  updatedAt: string; // ISO date string format
 }
 
 export interface CartSummary {

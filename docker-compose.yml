@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000' # Expose frontend on localhost:3000
+    env_file:
+      - .env # Load environment variables from .env file
+    environment:
+      # Inline environment variables (overrides .env if present)
+      KEYCLOAK_ID: '${KEYCLOAK_ID}'
+      KEYCLOAK_SECRET: '${KEYCLOAK_SECRET}'
+      KEYCLOAK_ISSUER: '${KEYCLOAK_ISSUER}'
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: '${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}'
+      NEXT_PUBLIC_PRODUCT_SERVICE_URL: '${NEXT_PUBLIC_PRODUCT_SERVICE_URL}'
+    volumes:
+      - .:/app # Sync local files with container (useful for dev)
+      - /app/node_modules # Avoid conflicts with node_modules
+    depends_on:
+      - backend # Wait for backend to start before frontend
+    command: npm run start
