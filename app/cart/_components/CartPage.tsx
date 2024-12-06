@@ -47,7 +47,7 @@ const CartPage: React.FC = () => {
         ),
       );
 
-      await axios.put(
+      await axios.patch(
         `http://localhost:8082/api/v1/cart/update/${cartId}`,
         null,
         {
@@ -71,6 +71,18 @@ const CartPage: React.FC = () => {
     } catch (err) {
       console.error('Error deleting item:', err);
       setError('Failed to remove item from cart.');
+    }
+  };
+  const removeAllItems = async (userId: string) => {
+    try {
+      await axios.delete(
+        `http://localhost:8082/api/v1/cart/delete/all/${userId}`,
+      );
+      setItems([]); // Clear the cart items locally after successful deletion
+      console.log(`All items for user ${userId} deleted successfully.`);
+    } catch (err) {
+      console.error('Error deleting all items:', err);
+      setError('Failed to remove all items from cart.');
     }
   };
 
