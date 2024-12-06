@@ -81,6 +81,7 @@ const Login = () => {
           <Button
             variant="outline"
             className="bg-green-600 text-white hover:bg-green-700"
+            onClick={() => router.push('/auth/signup')}
           >
             Sign Up
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -95,12 +96,14 @@ const Login = () => {
             <Button
               variant="outline"
               className="flex-1 rounded-r-none border-r-0"
+              onClick={() => router.push('/auth/signup')}
             >
               Sign Up
             </Button>
             <Button
               type="submit"
               className="flex-1 rounded-l-none bg-green-600 hover:bg-green-700"
+              onClick={() => router.push('/auth/login')}
             >
               Log In
             </Button>
