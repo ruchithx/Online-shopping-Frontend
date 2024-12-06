@@ -186,7 +186,7 @@ const Pay = (props: PayProps) => {
         if (props.userId) {
           try {
             await axios.delete(
-              `http://localhost:8082/api/v1/cart/delete/all/${userId}`,
+              `http://localhost:8082/api/v1/cart/delete/all/${props.userId}`,
             );
             setItems([]); // Clear the cart items locally after successful deletion
             console.log(
