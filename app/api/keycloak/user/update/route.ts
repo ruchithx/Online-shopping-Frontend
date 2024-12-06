@@ -19,11 +19,11 @@ export async function PUT(req: NextRequest) {
       firstName: body.firstName,
       lastName: body.lastName,
       attributes: {
-        image: body.image,
+        contactNumber: body.contactNumber,
         street: body.street,
-        locality: body.city,
-        region: body.state,
-        postal_code: body.zip,
+        locality: body.locality,
+        region: body.region,
+        postal_code: body.postal_code,
         country: body.country,
       },
     };

@@ -4,13 +4,13 @@ import axios from 'axios';
 import { getAdminToken, updateUserInKeycloak } from '@/utils/keycloak';
 
 export const registerUser = async (userData: any) => {
+  console.log('userData', userData);
   try {
-    console.log('APP_URL:', process.env.NEXT_PUBLIC_APP_URL);
-
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/keycloak/user`,
       userData,
     );
+    console.log('response', response);
     return response.data;
   } catch (error) {
     console.error('Error registering user:', error);
