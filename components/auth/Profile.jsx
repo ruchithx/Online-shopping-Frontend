@@ -58,8 +58,8 @@ const Profile = () => {
       ...prev,
       [name]: value,
     }));
-    setErrors((prev) => ({ ...prev, [name]: '' })); // Clear the error when the user types
-    setValidationError(''); // Clear validation error when input is edited
+    setErrors((prev) => ({ ...prev, [name]: '' })); 
+    setValidationError(''); 
   };
 
   const validateInputs = () => {
@@ -75,7 +75,7 @@ const Profile = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    return Object.keys(newErrors).length === 0; 
   };
 
   const handleSave = () => {
@@ -93,7 +93,7 @@ const Profile = () => {
 
       updateUser(userId, userData);
       toast.success('User details updated successfully!');
-      setShowModal(false); // Close the modal on success
+      setShowModal(false); 
     } catch (error) {
       console.error('Error saving user data:', error);
       toast.error('Failed to update user details.');
