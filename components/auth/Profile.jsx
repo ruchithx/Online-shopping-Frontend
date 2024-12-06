@@ -50,9 +50,8 @@ const Profile = () => {
         toast.error("Failed to load user details.");
       }
     };
-
     fetchUserDetails();
-  }, [userId]);
+  }, [session?.user?.id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
