@@ -135,13 +135,13 @@ const Profile = () => {
       </div>
 
       <div className="col-span-6 sm:col-span-3">
-        <label className="block text-sm font-medium text-gray-700">Locality</label>
+        <label className="block text-sm font-medium text-gray-700">City</label>
         <input
           type="text"
-          name="locality"
+          name="City"
           value={userData.locality}
           onChange={handleInputChange}
-          placeholder="Your Locality"
+          placeholder="Your City"
           className="mt-3 py-2 px-2 w-80 rounded-sm border-gray-200 bg-gray-100 text-sm text-gray-700 shadow-sm"
         />
       </div>
