@@ -2,10 +2,10 @@
 import React from 'react';
 import OrderItem from './OrderItem';
 import { Order } from '@/Type/OrderTypes';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Loader from '../Loader';
 import { useParams } from 'next/navigation';
+import axiosInstance from '@/lib/auth/axiosInstance';
 
 export default function OrderComponent() {
   const params = useParams();
@@ -17,7 +17,7 @@ export default function OrderComponent() {
   useEffect(() => {
     // Fetch data from API
     const fetchOrders = async () => {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         'http://localhost:8081/api/v1/orders/' + id,
       );
       setOrder(response.data);

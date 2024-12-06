@@ -67,7 +67,7 @@ export const updateUserInKeycloak = async (
         firstName: userData.firstName,
         lastName: userData.lastName,
         attributes: {
-          image: userData.image,
+          contactNumber: userData.contactNumber,
           street: userData.street,
           locality: userData.city,
           region: userData.state,

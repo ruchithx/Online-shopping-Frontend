@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { registerUser } from '@/services/userService';
+import Link from 'next/link';
 
 const Signup = () => {
   const router = useRouter();
@@ -115,7 +116,7 @@ const Signup = () => {
             <Button
               variant="outline"
               className="bg-green-600 text-white hover:bg-green-700"
-              onClick={() => router.push('/auth/signin')}
+              onClick={() => router.push('/auth/login')}
             >
               Log In
               <ArrowRight className="ml-2 h-4 w-4" />

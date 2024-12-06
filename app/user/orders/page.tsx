@@ -1,11 +1,13 @@
 'use client';
 import Loader from '@/components/Loader';
+import axiosInstance from '@/lib/auth/axiosInstance';
 import { Order } from '@/Type/OrderTypes';
-import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 export default function PastOrders() {
+  const { data: session } = useSession();
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -13,19 +15,18 @@ export default function PastOrders() {
     const fetchOrders = async () => {
       setLoading(true);
       try {
-        const ordersData = await axios.get(
-          'http://localhost:8081/api/v1/orders?userId=10',
+        const ordersData = await axiosInstance.get(
+          `http://localhost:8081/api/v1/orders?userId=${session?.user?.id}`,
         );
         setOrders(ordersData.data);
-        console.log(ordersData.data);
+        console.log(session?.user?.id);
       } catch (error) {
-        console.error(error);
-        console.log('Error', error);
+        console.log(error);
       }
     };
     fetchOrders();
     setLoading(false);
-  }, []);
+  }, [session?.user?.id]);
 
   if (loading || !orders) {
     return <Loader />;

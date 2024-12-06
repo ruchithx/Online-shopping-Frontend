@@ -6,7 +6,11 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+
+// import { getSession } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
+import axiosInstance from '@/lib/auth/axiosInstance';
+
 
 type Product = {
   productId: number; // Unique identifier for the product
@@ -37,11 +41,13 @@ const Product: React.FC = () => {
   const [product, setProduct] = useState<Product>();
   const [value, setValue] = useState(1);
   const router = useRouter();
+
   const { data: session } = useSession(); // Correctly typed from next-auth
   console.log(session?.user?.id);
   const userId = session?.user?.id;
 
-  console.log(id);
+
+  console.log(session);
   // const thumbnails = [
   //   { src: '/Carrot Sub1.jpg' },
   //   { src: '/Carrot Sub2.jpg' },
@@ -76,6 +82,7 @@ const Product: React.FC = () => {
   if (!product) return <div>No Product</div>;
 
   async function handleAddToCart() {
+    console.log(session?.user?.id);
     try {
       if (!product) return;
       const cartItem = {
@@ -83,9 +90,12 @@ const Product: React.FC = () => {
         productName: product?.productName,
         price: setTotalPrice(product.productPrice!, product.discount!) * value,
         quantity: value,
-        userId: userId,
+
+        userId: session?.user?.id,
         productImage: product?.mediaUrl,
       };
+
+      console.log(cartItem);
 
       const responseOfAddingCart = await axios.post(
         'http://localhost:8082/api/v1/cart/add',
@@ -190,35 +200,38 @@ const Product: React.FC = () => {
               Rs. {product?.productPrice}
             </span>
           </p>
-
-          <div className="flex items-center bg-transparent rounded-full overflow-hidden">
-            <button
-              onClick={decreaseValue}
-              className="bg-[#A6DFAC] text-white px-6 py-2 flex items-center justify-center rounded-l-full"
-            >
-              -
-            </button>
-            <div className="flex items-center border-t border-b border-[#4CAF50] px-4 py-[0.44rem]">
-              <input
-                type="text"
-                value={value.toFixed(1)}
-                className="w-12 text-center border-0 focus:outline-none bg-white"
-                readOnly
-              />
+          {!session ? (
+            ''
+          ) : (
+            <div className="flex items-center bg-transparent rounded-full overflow-hidden">
+              <button
+                onClick={decreaseValue}
+                className="bg-[#A6DFAC] text-white px-6 py-2 flex items-center justify-center rounded-l-full"
+              >
+                -
+              </button>
+              <div className="flex items-center border-t border-b border-[#4CAF50] px-4 py-[0.44rem]">
+                <input
+                  type="text"
+                  value={value.toFixed(1)}
+                  className="w-12 text-center border-0 focus:outline-none bg-white"
+                  readOnly
+                />
+              </div>
+              <button
+                onClick={increaseValue}
+                className="bg-[#4CAF50] text-white px-6 py-2 flex items-center justify-center rounded-r-full"
+              >
+                +
+              </button>
+              <button
+                onClick={handleAddToCart}
+                className="bg-[#4CAF50] text-white px-6 py-2 rounded-md ml-4"
+              >
+                Add to cart
+              </button>
             </div>
-            <button
-              onClick={increaseValue}
-              className="bg-[#4CAF50] text-white px-6 py-2 flex items-center justify-center rounded-r-full"
-            >
-              +
-            </button>
-            <button
-              onClick={handleAddToCart}
-              className="bg-[#4CAF50] text-white px-6 py-2 rounded-md ml-4"
-            >
-              Add to cart
-            </button>
-          </div>
+          )}
 
           <div className="flex gap-6 ">
             <p className="text-gray-500 font-semibold">Category :</p>

@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
         },
       ],
       attributes: {
-        image: body.image,
+        contactNumber: body.contactNumber,
         street: body.street,
         locality: body.locality,
         region: body.region,

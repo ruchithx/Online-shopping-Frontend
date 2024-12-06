@@ -4,19 +4,23 @@ import React, { useEffect, useState } from 'react';
 import { BiFilterAlt } from 'react-icons/bi';
 import OrdersAdmin from './OrdersAdmin';
 import { Order } from '@/Type/OrderTypes';
-import axios from 'axios';
 import Loader from '../Loader';
+import axiosInstance from '@/lib/auth/axiosInstance';
+import { useSession } from 'next-auth/react';
+import AccessDeniedComponent from '../AccessDeniedComponent';
 
 export default function OrderViewForAdmin() {
+  const { data: session } = useSession();
+
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc'); // State for sorting order
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
     setLoading(true);
     const fetchOrders = async () => {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         'http://localhost:8081/api/v1/admin/orders',
       );
       setOrders(response.data);
@@ -24,7 +28,9 @@ export default function OrderViewForAdmin() {
     fetchOrders();
     setLoading(false);
   }, []);
-
+  if (!session?.roles.includes('admin')) {
+    return <AccessDeniedComponent />;
+  }
   if (loading) {
     return <Loader />;
   }
