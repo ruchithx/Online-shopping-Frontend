@@ -1,6 +1,7 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
-
+import React, { useEffect, useRef, useState } from 'react';
+import { CartItem } from '../app/cart/types/cart';
+import { useSession } from 'next-auth/react';
 import crypto from 'crypto';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -60,7 +61,12 @@ declare global {
 }
 
 const Pay = (props: PayProps) => {
+  const { data: session } = useSession(); // Correctly typed from next-auth
+  console.log(session?.user?.id);
+  const userId = session?.user?.id;
   const scriptRef = useRef<HTMLScriptElement | null>(null);
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const orderId = props.orderId;
   const name = props.item;
@@ -174,6 +180,24 @@ const Pay = (props: PayProps) => {
         if (order) {
           console.log(order);
           toast.success('order created successfully');
+        }
+
+        // Proceed to remove all items from cart
+        if (props.userId) {
+          try {
+            await axios.delete(
+              `http://localhost:8082/api/v1/cart/delete/all/${props.userId}`,
+            );
+            setItems([]); // Clear the cart items locally after successful deletion
+            console.log(
+              `All items for user ${props.userId} deleted successfully.`,
+            );
+            toast.success('Cart cleared successfully');
+          } catch (err) {
+            console.error('Error deleting all items:', err);
+            setError('Failed to remove all items from cart.');
+            toast.error('Failed to clear the cart');
+          }
         }
 
         // console.log('Payment completed successfully');
