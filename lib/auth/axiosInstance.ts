@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getSession } from 'next-auth/react';
-import { Session } from 'next-auth';
 
 // Extend the Session type to include accessToken
 declare module 'next-auth' {
@@ -16,6 +15,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     const session = await getSession();
+    console.log(session?.accessToken);
     if (session?.accessToken) {
       config.headers.Authorization = `Bearer ${session.accessToken}`; // Attach the access token
     }
