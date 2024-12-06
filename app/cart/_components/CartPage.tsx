@@ -8,6 +8,7 @@ import UnderNavbar from '@/app/product/components/Undernavbar';
 import CartSummary from '../_components/CartSummary';
 import { CartSummary as CartSummaryType } from '../types/cart';
 import Footer from '../../../components/layouts/Footer';
+import { useSession } from 'next-auth/react';
 // import Navbar from '@/app/product/components/NavBar';
 // import UnderNavbar from '@/app/product/components/Undernavbar';
 
@@ -15,7 +16,9 @@ const CartPage: React.FC = () => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const userId = 1;
+  const { data: session } = useSession(); // Correctly typed from next-auth
+  console.log(session?.user?.id);
+  const userId = session?.user?.id;
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
