@@ -91,7 +91,7 @@ const Product: React.FC = () => {
       const cartItem = {
         productId: product?.productId,
         productName: product?.productName,
-        price: setTotalPrice(product.productPrice!, product.discount!) * value,
+        price: setTotalPrice(product.productPrice!, product.discount!),
         quantity: value,
 
         userId: session?.user?.id,
