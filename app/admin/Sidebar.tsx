@@ -30,7 +30,7 @@ const Sidebar = () => {
             <span className="text-gray-800">Order Lists</span>
           </div>
         </Link>
-        <Link href="/admin/favorites">
+        {/* <Link href="/admin/favorites">
           <div className="flex items-center space-x-2 p-2 rounded-lg hover:bg-green-100 active:bg-green-200">
             <FaHeart className="w-6 h-6 text-gray-600" />
             <span className="text-gray-800">Favorites</span>
@@ -53,7 +53,7 @@ const Sidebar = () => {
             <FaSignOutAlt className="w-6 h-6 text-gray-600" />
             <span className="text-gray-800">Logout</span>
           </div>
-        </Link>
+        </Link> */}
       </nav>
     </aside>
   );
