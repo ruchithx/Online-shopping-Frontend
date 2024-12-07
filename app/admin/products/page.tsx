@@ -6,19 +6,62 @@ import { MdEdit, MdDelete } from 'react-icons/md';
 import { useRouter } from 'next/navigation'; // Corrected import for Next.js App Router
 import Image from 'next/image';
 
-const BASE_URL = 'http://localhost:3001';
+export type ProductType = {
+  productId: number; // Unique identifier for the product
+  productName: string; // Name of the product
+  productDescription: string; // Detailed description of the product
+  productPrice: number; // Price of the product
+  isDiscount: boolean; // Whether the product has a discount
+  discount: number; // Discount percentage
+  quantityInStock: number; // Number of items in stock
+  bestSeller: boolean; // Availability status of the product
+  hotDeals: boolean; // Availability status of the product
+  status: boolean; // Availability status of the product
+  createdAt: Date | null; // Creation timestamp or null
+  updatedAt: Date | null; // Last update timestamp or null
+  mediaUrl: string; // URL for product media (image or video)
+  category: {
+    categoryId: number; // Unique identifier for the category
+    categoryName: string; // Name of the category
+    categoryDescription: string; // Description of the category
+  };
+  brand: {
+    brandId: number; // Unique identifier for the brand
+    brandName: string; // Name of the brand
+  };
+  sku: string | null; // Stock Keeping Unit identifier or null
+};
+
+const BASE_URL = 'http://localhost:8083/api/v1';
 
 export default function ProductsPage() {
   const router = useRouter();
   const [products, setProducts] = useState([
     {
-      id: 0,
-      productName: '',
-      price: 0,
-      image: '',
-      category: '',
-      piece: 0,
-      availableColors: ['bg-black', 'bg-green-400', 'bg-red-500'],
+      productId: 1,
+      productName: 'Wireless Bluetooth Earbuds',
+      productDescription:
+        'High-quality wireless earbuds with noise cancellation and long battery life.',
+      productPrice: 49.99,
+      isDiscount: true,
+      discount: 10,
+      quantityInStock: 150,
+      bestSeller: true,
+      hotDeals: true,
+      status: true,
+      createdAt: '2024-01-01T10:00:00Z',
+      updatedAt: '2024-12-01T12:00:00Z',
+      mediaUrl: 'https://example.com/media/earbuds.jpg',
+      category: {
+        categoryId: 101,
+        categoryName: 'Electronics',
+        categoryDescription: 'Devices and gadgets for daily use.',
+      },
+      brand: {
+        brandId: 201,
+        brandName: 'TechCorp',
+      },
+      sku: 'EB12345',
     },
   ]); // Start with an empty array
   const [loading, setLoading] = useState(true);
@@ -27,8 +70,9 @@ export default function ProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/product`);
+        const response = await axios.get(`${BASE_URL}/product/getproducts`);
         setProducts(response.data);
+        console.log(response.data);
       } catch (error: unknown) {
         // Check if the error is an AxiosError and has a response
         if (axios.isAxiosError(error)) {
@@ -51,15 +95,15 @@ export default function ProductsPage() {
   }, []); // Only fetch on component mount
 
   const handleCategoryClick = () => {
-    router.push('/admin/products/addnewcategory');
+    router.push('/admin/products/addNewCategory');
   };
 
   const handleBrandClick = () => {
-    router.push('/admin/products/addbrand');
+    router.push('/admin/products/addBrand');
   };
 
   const handleAddProductClick = () => {
-    router.push('/admin/products/addproduct');
+    router.push('/admin/products/addProduct');
   };
 
   if (loading) {
@@ -108,16 +152,16 @@ export default function ProductsPage() {
                 <th className="p-3">Category</th>
                 <th className="p-3">Price</th>
                 <th className="p-3">Piece</th>
-                <th className="p-3">Available Color</th>
+                {/* <th className="p-3">Available Color</th> */}
                 <th className="p-3">Action</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr key={product.id} className="border-t text-gray-700">
+                <tr key={product.productId} className="border-t text-gray-700">
                   <td className="p-3">
                     <Image
-                      src={product.image || '/placeholder.jpg'} // Use placeholder if image is empty
+                      src={product.mediaUrl || '/placeholder.jpg'} // Use placeholder if image is empty
                       alt={product.productName}
                       className="w-16 h-16 object-cover rounded"
                       width={64}
@@ -125,10 +169,10 @@ export default function ProductsPage() {
                     />
                   </td>
                   <td className="p-3">{product.productName}</td>
-                  <td className="p-3">{product.category}</td>
-                  <td className="p-3">{product.price}</td>
-                  <td className="p-3">{product.piece}</td>
-                  <td className="p-3">
+                  <td className="p-3">{product.category.categoryName}</td>
+                  <td className="p-3">{product.productPrice}</td>
+                  <td className="p-3">{product.quantityInStock}</td>
+                  {/* <td className="p-3">
                     <div className="flex space-x-2">
                       {product.availableColors?.map((color, index) => (
                         <span
@@ -138,7 +182,7 @@ export default function ProductsPage() {
                         ></span>
                       ))}
                     </div>
-                  </td>
+                  </td> */}
 
                   <td className="p-3 flex space-x-2">
                     <button className="text-blue-500 hover:text-blue-700 flex items-center space-x-1">

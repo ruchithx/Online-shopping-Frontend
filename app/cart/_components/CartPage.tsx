@@ -12,8 +12,14 @@ import { useSession } from 'next-auth/react';
 // import Navbar from '@/app/product/components/NavBar';
 // import UnderNavbar from '@/app/product/components/Undernavbar';
 
+interface OrderItems {
+  productId: number;
+  quantity: number;
+}
+
 const CartPage: React.FC = () => {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [orderItems, setOrderItems] = useState<OrderItems[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { data: session } = useSession(); // Correctly typed from next-auth
@@ -25,8 +31,18 @@ const CartPage: React.FC = () => {
         const response = await axios.get(
           `http://localhost:8082/api/v1/cart/${userId}`,
         );
-        setItems(response.data);
-        setLoading(false);
+
+        if (response.data) {
+          setItems(response.data);
+          console.log(response.data);
+          setLoading(false);
+
+          const orderItems = response.data.map((item: OrderItems) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+          }));
+          setOrderItems(orderItems);
+        }
       } catch (err) {
         console.error('Error fetching cart items:', err);
         setError('Failed to fetch cart items.');
@@ -129,7 +145,11 @@ const CartPage: React.FC = () => {
                 />
               </div>
               <div className="bg-gray-50 p-6">
-                <CartSummary summary={summary} />
+                <CartSummary
+                  summary={summary}
+                  userId={userId!}
+                  orderItems={orderItems}
+                />
               </div>
             </div>
           )}

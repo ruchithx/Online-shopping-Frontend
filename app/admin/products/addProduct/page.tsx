@@ -6,6 +6,7 @@ import axios from 'axios';
 import ImageUploader from './ImageUploader';
 import Image from 'next/image';
 import { FaCloudUploadAlt } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 // const SketchPicker = dynamic(
 //   () => import('react-color').then((mod) => mod.SketchPicker),
@@ -36,7 +37,7 @@ export default function AddProductPage() {
   // Color selection state
   // const [selectedColors, setSelectedColors] = useState<string[]>([]);
   // const [currentColor, setCurrentColor] = useState('#ffffff');
-  const [productImage, setProductImage] = useState('');
+  const [productImage, setProductImage] = useState('/profile-image.jpg');
   console.log(productImage);
 
   useEffect(() => {
@@ -61,6 +62,24 @@ export default function AddProductPage() {
   }, []);
 
   if (!hasMounted) return <div>Loading...</div>; // Prevent server-side rendering issues
+
+  const resetProductForm = () => {
+    setProductName('');
+    setProductDescription('');
+    setProductPrice('');
+    setCategory('');
+    setBrand('');
+    setPiece(0);
+    setIsDiscount(false);
+    setDiscountPercentage(0);
+    setStatus(true);
+    setHotDeals(true);
+    setBestSeller(true);
+    setProductImage('');
+    // Uncomment if color-related states are used
+    // setSelectedColors([]);
+    // setCurrentColor('#ffffff');
+  };
 
   // const handleColorAdd = () => {
   //   if (!selectedColors.includes(currentColor)) {
@@ -95,6 +114,8 @@ export default function AddProductPage() {
       // image,
     };
 
+    console.log(newProduct);
+
     const productResponce = await axios.post(
       `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/admin/product/addproduct`,
       newProduct,
@@ -113,6 +134,10 @@ export default function AddProductPage() {
     );
 
     console.log(imageResponce.data);
+
+    resetProductForm();
+
+    toast.success('Product added successfully');
   };
 
   const handleSaveImage = async () => {
@@ -137,7 +162,7 @@ export default function AddProductPage() {
             />
           </span>
         </div>
-        {productImage ? (
+        {/* {productImage ? (
           <button
             onClick={handleSaveImage}
             className="text-blue-600 hover:underline"
@@ -147,11 +172,11 @@ export default function AddProductPage() {
               save
             </div>
           </button>
-        ) : (
-          <button className="text-blue-600 hover:underline">
-            <ImageUploader setProductImage={setProductImage} />
-          </button>
-        )}
+        ) : ( */}
+        <button className="text-blue-600 hover:underline">
+          <ImageUploader setProductImage={setProductImage} />
+        </button>
+        {/* )} */}
       </div>
 
       <div className="grid grid-cols-2 gap-12 mt-8 ml-12 mr-16">
@@ -366,7 +391,7 @@ export default function AddProductPage() {
         </div> */}
       </div>
 
-      <div className="mt-8 flex justify-center">
+      <div className="mt-8 mb-20 flex justify-center">
         <button
           onClick={handleSubmit}
           className="bg-green-600 text-white px-16 py-2 rounded-lg hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"

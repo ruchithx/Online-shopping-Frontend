@@ -63,9 +63,9 @@ export default function ProductCard({
         {/* {oldPrice != newPrice && ( */}
         <div className="text-sm line-through text-Gray">₹{newPrice}</div>
         {/* )} */}
-        <button className="text-Green rounded w-16 h-7 border border-Green hover:bg-Green hover:text-white transition duration-200">
+        {/* <button className="text-Green rounded w-16 h-7 border border-Green hover:bg-Green hover:text-white transition duration-200">
           ADD
-        </button>
+        </button> */}
       </div>
     </div>
   );

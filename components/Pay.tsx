@@ -23,7 +23,7 @@ interface PayProps {
   address: string;
   city: string;
   country: string;
-  userId: number;
+  userId: string;
   order: Order[]; // Specify the exact type if known
 }
 
