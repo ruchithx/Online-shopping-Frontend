@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import crypto from 'crypto';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { redirect } from 'next/navigation';
 
 type Order = {
   productId: number;
@@ -193,6 +194,7 @@ const Pay = (props: PayProps) => {
               `All items for user ${props.userId} deleted successfully.`,
             );
             toast.success('Cart cleared successfully');
+            redirect(`http://localhost:8082/api/v1/cart/${props.userId}`); // Navigate to the new post page
           } catch (err) {
             console.error('Error deleting all items:', err);
             setError('Failed to remove all items from cart.');

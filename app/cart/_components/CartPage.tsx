@@ -10,6 +10,7 @@ import { CartSummary as CartSummaryType } from '../types/cart';
 import Footer from '../../../components/layouts/Footer';
 import { useSession } from 'next-auth/react';
 import Loader from '@/components/Loader';
+import toast from 'react-hot-toast';
 // import Navbar from '@/app/product/components/NavBar';
 // import UnderNavbar from '@/app/product/components/Undernavbar';
 
@@ -85,9 +86,11 @@ const CartPage: React.FC = () => {
       setItems((prevItems) =>
         prevItems.filter((item) => item.cartId !== cartId),
       );
+      toast.success('Item removed from cart');
     } catch (err) {
       console.error('Error deleting item:', err);
       setError('Failed to remove item from cart.');
+      toast.error('Failed to remove item from cart');
     }
   };
   // const removeAllItems = async (userId: string) => {
