@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 
 services:
   frontend:
@@ -19,6 +19,6 @@ services:
     volumes:
       - .:/app # Sync local files with container (useful for dev)
       - /app/node_modules # Avoid conflicts with node_modules
-    depends_on:
-      - backend # Wait for backend to start before frontend
+    # depends_on:
+    #   - online-shopping-backend # Wait for backend to start before frontend
     command: npm run start
