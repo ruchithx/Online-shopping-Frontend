@@ -90,7 +90,7 @@ const CartPage: React.FC = () => {
     } catch (err) {
       console.error('Error deleting item:', err);
       setError('Failed to remove item from cart.');
-      toast.error('Failed to remove item from cart');
+      // toast.error('Failed to remove item from cart');
     }
   };
   // const removeAllItems = async (userId: string) => {
