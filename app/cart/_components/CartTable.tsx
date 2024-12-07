@@ -16,14 +16,13 @@ const CartTable: React.FC<CartTableProps> = ({
 }) => {
   return (
     <div className="overflow-x-auto flex ">
-      <table className="w-full  text-sm ">
+      <table className="w-full text-sm p-1 ">
         <thead className="bg-[#4caf50] p-4 text-[#f4f4f9] ">
-          <tr>
+          <tr className="p-4">
             <th>Product Name</th>
             <th>Price</th>
+
             <th>Quantity</th>
-            {/* <th>Discount</th> */}
-            {/* <th>Total</th> */}
             <th>Action</th>
           </tr>
         </thead>
