@@ -125,12 +125,18 @@ const Navbar: FC = () => {
                     <div className="border-t border-white my-2 w-48"></div>
 
                     <div className="flex flex-col text-[#F4F4F9]">
-                      <Link href="/user/profile">
+                      <Link
+                        onClick={() => setIsDropdownOpen(false)}
+                        href="/user/profile"
+                      >
                         <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
                           <FiUser className="mr-2" /> Manage My Account
                         </button>
                       </Link>
-                      <Link href="/user/orders">
+                      <Link
+                        onClick={() => setIsDropdownOpen(false)}
+                        href="/user/orders"
+                      >
                         <button className="flex items-center py-2 text-sm hover:text-[#1A202C]">
                           <FiBox className="mr-2" /> My Orders
                         </button>

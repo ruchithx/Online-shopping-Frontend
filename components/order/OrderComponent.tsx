@@ -13,6 +13,7 @@ export default function OrderComponent() {
 
   const [order, setOrder] = useState<Order>();
   const [roughTotal, setRoughTotal] = useState<number>(0);
+  const [discount, setDiscount] = useState<number>(0);
 
   useEffect(() => {
     // Fetch data from API
@@ -29,10 +30,17 @@ export default function OrderComponent() {
   useEffect(() => {
     if (order) {
       let total = 0;
+      let discount = 0;
       order.orderItems.forEach((orderItem) => {
         total += orderItem.product?.productPrice * orderItem.quantity;
+        discount +=
+          (orderItem.product?.productPrice *
+            orderItem.quantity *
+            orderItem.product?.discount) /
+          100;
       });
       setRoughTotal(total);
+      setDiscount(discount);
     }
   }, [order]);
 
@@ -96,15 +104,13 @@ export default function OrderComponent() {
           <div className="border-b border-gray-300 mb-4 "></div>
           <div className="flex justify-between mb-4 space-y-2 ">
             <h3 className="text-gray-600 ">Total Discount</h3>
-            <p className="text-gray-600 hover:text-green-600">
-              {roughTotal - order.totalPrice}
-            </p>
+            <p className="text-gray-600 hover:text-green-600">{discount}</p>
           </div>
           <div className="border-b border-gray-300 mb-4"></div>
           <div className="flex justify-between space-y-2">
             <h3 className="text-gray-600 ">Total</h3>
             <p className="text-gray-600 hover:text-green-600 font-semibold">
-              Rs:{order?.totalPrice}
+              Rs:{roughTotal - discount}
             </p>
           </div>
         </div>
