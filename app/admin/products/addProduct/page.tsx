@@ -111,6 +111,7 @@ export default function AddProductPage() {
       status: status,
       bestSeller: bestSeller,
       hotDeals: hotDeals,
+      mediaUrl: productImage,
       // availableColors: selectedColors,
       // image,
     };
@@ -128,6 +129,7 @@ export default function AddProductPage() {
       productId: productResponce.data.productId,
       mediaUrl: productImage,
     };
+    console.log(productImageData);
 
     const imageResponce = await axios.post(
       `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/admin/product/addimage`,
