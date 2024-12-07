@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 // import { getSession } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import axiosInstance from '@/lib/auth/axiosInstance';
-
+import Loader from '@/components/Loader';
 
 type Product = {
   productId: number; // Unique identifier for the product
@@ -41,11 +41,11 @@ const Product: React.FC = () => {
   const [product, setProduct] = useState<Product>();
   const [value, setValue] = useState(1);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   const { data: session } = useSession(); // Correctly typed from next-auth
   console.log(session?.user?.id);
   const userId = session?.user?.id;
-
 
   console.log(session);
   // const thumbnails = [
@@ -58,6 +58,7 @@ const Product: React.FC = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/api/v1/product/getproductbyid/${id}`,
         );
@@ -71,13 +72,15 @@ const Product: React.FC = () => {
           // setError('An unexpected error occurred.');
         }
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     };
 
     fetchProduct();
     // fetchProduct();
   }, [id]);
+
+  if (loading) return <Loader />;
 
   if (!product) return <div>No Product</div>;
 
@@ -116,11 +119,11 @@ const Product: React.FC = () => {
   // const [mainImage, setMainImage] = useState('/Carrot Sub4.png');
 
   const increaseValue = () => {
-    setValue((prev) => parseFloat((prev + 0.1).toFixed(1)));
+    setValue((prev) => parseFloat((prev + 1).toFixed(1)));
   };
 
   const decreaseValue = () => {
-    setValue((prev) => (prev > 0 ? parseFloat((prev - 0.1).toFixed(1)) : 0));
+    setValue((prev) => (prev > 0 ? parseFloat((prev - 1).toFixed(1)) : 0));
   };
 
   console.log(product);
@@ -238,12 +241,17 @@ const Product: React.FC = () => {
             <p className="text-[#4CAF50]">{product?.category.categoryName}</p>
           </div>
 
-          <div className="flex items-center gap-6 ">
+          <div className="flex gap-6 ">
+            <p className="text-gray-500 font-semibold">Available Quantity :</p>
+            <p className="text-[#4CAF50]">{product?.quantityInStock}</p>
+          </div>
+
+          {/* <div className="flex items-center gap-6 ">
             <p className="text-gray-500 font-semibold">Share :</p>
             <FaFacebook className="text-gray-700 cursor-pointer" size={20} />
             <FaWhatsapp className="text-gray-700 cursor-pointer" size={20} />
             <FaEnvelope className="text-gray-700 cursor-pointer" size={20} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
