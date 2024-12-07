@@ -6,6 +6,7 @@ import SupersaverSection from '@/components/SupersaverSection';
 import BestSellsSection from '@/components/BestSellsSection';
 import axios from 'axios';
 import { Product } from './product/category/[name]/page';
+import Footer from '@/components/layouts/Footer';
 // import Pay from '@/components/Pay';
 // import Product from './product/[id]/page';
 // import Pay from '@/components/Pay';
@@ -40,6 +41,7 @@ export default async function Home() {
       <BestSellsSection
         bestSellesProducts={bestSellesProducts ? bestSellesProducts : []}
       />
+      <Footer />
     </div>
   );
 }

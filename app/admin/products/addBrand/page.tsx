@@ -3,11 +3,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'; // Corrected import for Next.js App Router
+import toast from 'react-hot-toast';
 
 export default function BrandPage() {
   const router = useRouter();
 
-  const [brands, setBrands] = useState<{ id: number; brandName: string }[]>([]); // Updated to store objects
+  const [brands, setBrands] = useState<
+    { brandId: number; brandName: string }[]
+  >([]); // Updated to store objects
   const [newBrand, setNewBrand] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -53,6 +56,7 @@ export default function BrandPage() {
       // setBrands(response.data);
       setNewBrand('');
       fetchBrands();
+      toast.success('Brand added successfully');
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setError('Failed to add brand: ' + error.message);
@@ -93,11 +97,11 @@ export default function BrandPage() {
     return <div className="text-red-500">Error: {error}</div>;
   }
   const handleCategoryClick = () => {
-    router.push('/admin/products/addNewcategory');
+    router.push('/admin/products/addNewCategory');
   };
 
   const handleAddProductClick = () => {
-    router.push('/admin/products/addproduct');
+    router.push('/admin/products/addProduct');
   };
   return (
     <div className="h-full bg-white rounded-lg p-8">
@@ -160,7 +164,7 @@ export default function BrandPage() {
           <div className="space-y-2">
             {brands.map((brand) => (
               <div
-                key={brand.id}
+                key={brand.brandId}
                 className="bg-gray-100 px-4 py-2 rounded-lg shadow-sm text-gray-700"
               >
                 {brand.brandName}

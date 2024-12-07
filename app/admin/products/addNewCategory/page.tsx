@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'; // Corrected import for Next.js App Router
+import toast from 'react-hot-toast';
 
 export default function CategoryPage() {
   const router = useRouter();
 
   const [categories, setCategories] = useState<
-    { id: number; categoryName: string; description: string }[]
+    { categoryId: number; categoryName: string; categoryDescription: string }[]
   >([]);
   const [newCategory, setNewCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -60,6 +61,9 @@ export default function CategoryPage() {
         data,
       );
       console.log(response.data);
+      if (response.data) {
+        toast.success('Category added successfully');
+      }
       fetchCategories();
       cleanForm();
     } catch (e) {
@@ -80,11 +84,11 @@ export default function CategoryPage() {
   }
 
   const handleBrandClick = () => {
-    router.push('/admin/products/addbrand');
+    router.push('/admin/products/addBrand');
   };
 
   const handleAddProductClick = () => {
-    router.push('/admin/products/addproduct');
+    router.push('/admin/products/addProduct');
   };
 
   return (
@@ -158,7 +162,7 @@ export default function CategoryPage() {
           <div className="space-y-2">
             {categories.map((category) => (
               <div
-                key={category.id}
+                key={category.categoryId}
                 className="bg-gray-100 px-4 py-2 rounded-lg shadow-sm text-gray-700"
               >
                 {category.categoryName}

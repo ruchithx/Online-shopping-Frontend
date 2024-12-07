@@ -31,7 +31,7 @@ const CartTable: React.FC<CartTableProps> = ({
           {items.map((item) => {
             // const totalAfterDiscount = item.price;
             return (
-              <tr key={item.productId} className="border-b">
+              <tr key={item.cartId} className="border-b">
                 <td className=" flex items-center transform translate-y-1  ">
                   <Image
                     src={item.productImage}

@@ -2,11 +2,21 @@ import React, { useState } from 'react';
 import { CartSummary as CartSummaryType } from '../types/cart';
 import Pay from '@/components/Pay';
 
+interface OrderItems {
+  productId: number;
+  quantity: number;
+}
 interface CartSummaryProps {
   summary: CartSummaryType;
+  userId: string;
+  orderItems: OrderItems[];
 }
 
-const CartSummary: React.FC<CartSummaryProps> = ({ summary }) => {
+const CartSummary: React.FC<CartSummaryProps> = ({
+  summary,
+  userId,
+  orderItems,
+}) => {
   const [address, setAddress] = useState('');
 
   // const handleSaveAddress = () => {
@@ -22,7 +32,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({ summary }) => {
     fullAmount: summary.total.toFixed(2),
     currency: 'LKR',
     address: address,
-    userId: 1,
+    userId,
   };
 
   const order = [
@@ -85,7 +95,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({ summary }) => {
       <Pay
         orderId="1"
         item={paymentDetails?.items}
-        order={order}
+        order={orderItems}
         amount={paymentDetails.fullAmount}
         currency={paymentDetails?.currency}
         address={paymentDetails?.address}
@@ -96,6 +106,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({ summary }) => {
         phone=""
         city=""
         country=""
+        // orderItems={orderItems}
       />
     </div>
   );

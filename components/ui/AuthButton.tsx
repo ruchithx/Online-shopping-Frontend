@@ -9,9 +9,10 @@ const AuthButton: React.FC = () => {
   return (
     <div>
       {session ? (
-        <button onClick={() => signOut()} style={buttonStyle}>
-          Sign Out
-        </button>
+        // <button onClick={() => signOut()} style={buttonStyle}>
+        //   Sign Out
+        // </button>
+        ''
       ) : (
         <button onClick={() => signIn()} style={buttonStyle}>
           Sign In
