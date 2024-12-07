@@ -9,6 +9,7 @@ import CartSummary from '../_components/CartSummary';
 import { CartSummary as CartSummaryType } from '../types/cart';
 import Footer from '../../../components/layouts/Footer';
 import { useSession } from 'next-auth/react';
+import Loader from '@/components/Loader';
 // import Navbar from '@/app/product/components/NavBar';
 // import UnderNavbar from '@/app/product/components/Undernavbar';
 
@@ -89,18 +90,18 @@ const CartPage: React.FC = () => {
       setError('Failed to remove item from cart.');
     }
   };
-  const removeAllItems = async (userId: string) => {
-    try {
-      await axios.delete(
-        `http://localhost:8082/api/v1/cart/delete/all/${userId}`,
-      );
-      setItems([]); // Clear the cart items locally after successful deletion
-      console.log(`All items for user ${userId} deleted successfully.`);
-    } catch (err) {
-      console.error('Error deleting all items:', err);
-      setError('Failed to remove all items from cart.');
-    }
-  };
+  // const removeAllItems = async (userId: string) => {
+  //   try {
+  //     await axios.delete(
+  //       `http://localhost:8082/api/v1/cart/delete/all/${userId}`,
+  //     );
+  //     setItems([]); // Clear the cart items locally after successful deletion
+  //     console.log(`All items for user ${userId} deleted successfully.`);
+  //   } catch (err) {
+  //     console.error('Error deleting all items:', err);
+  //     setError('Failed to remove all items from cart.');
+  //   }
+  // };
 
   const calculateSummary = (): CartSummaryType => {
     const itemCount = items.reduce((count, item) => count + item.quantity, 0);
@@ -127,24 +128,24 @@ const CartPage: React.FC = () => {
       {/* <Navbar /> */}
       <UnderNavbar />
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="p-6 bg-gray-50 min-h-screen">
+        <div className="p-6 min-h-screen">
           <h2 className="text-2xl font-bold mb-6 text-center text-[#4CAF50]">
             My Cart
           </h2>
           {loading ? (
-            <p className="text-center">Loading...</p>
+            <Loader />
           ) : error ? (
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="col-span-2 bg-white shadow-lg p-6">
+              <div className="col-span-2  shadow-lg p-6">
                 <CartTable
                   items={items}
                   onUpdateQuantity={updateQuantity}
                   onRemove={removeItem}
                 />
               </div>
-              <div className="bg-gray-50 p-6">
+              <div className="p-6">
                 <CartSummary
                   summary={summary}
                   userId={userId!}

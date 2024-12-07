@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'; // Corrected import for Next.js App Router
 import toast from 'react-hot-toast';
+import Loader from '@/components/Loader';
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -76,7 +77,7 @@ export default function CategoryPage() {
   };
 
   if (loading) {
-    return <div>Loading brands...</div>;
+    return <Loader />;
   }
 
   if (error) {

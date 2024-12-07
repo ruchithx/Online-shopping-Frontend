@@ -7,6 +7,7 @@ import ImageUploader from './ImageUploader';
 import Image from 'next/image';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import Loader from '@/components/Loader';
 
 // const SketchPicker = dynamic(
 //   () => import('react-color').then((mod) => mod.SketchPicker),
@@ -61,7 +62,7 @@ export default function AddProductPage() {
     fetchData();
   }, []);
 
-  if (!hasMounted) return <div>Loading...</div>; // Prevent server-side rendering issues
+  if (!hasMounted) return <Loader />; // Prevent server-side rendering issues
 
   const resetProductForm = () => {
     setProductName('');

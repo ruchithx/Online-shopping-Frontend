@@ -5,6 +5,7 @@ import axios from 'axios';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { useRouter } from 'next/navigation'; // Corrected import for Next.js App Router
 import Image from 'next/image';
+import Loader from '@/components/Loader';
 
 export type ProductType = {
   productId: number; // Unique identifier for the product
@@ -107,7 +108,7 @@ export default function ProductsPage() {
   };
 
   if (loading) {
-    return <div>Loading products...</div>;
+    return <Loader />;
   }
 
   if (error) {

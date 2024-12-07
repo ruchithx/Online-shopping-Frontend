@@ -13,6 +13,7 @@ import {
   ShoppingBag,
 } from 'lucide-react';
 import Image from 'next/image';
+import Loader from '@/components/Loader';
 
 const Login = () => {
   const router = useRouter();
@@ -133,7 +134,7 @@ const Login = () => {
             className="w-full bg-green-600 py-6 text-lg hover:bg-green-700"
             disabled={isLoading}
           >
-            {isLoading ? 'Loading...' : 'Continue to account'}
+            {isLoading ? <Loader /> : 'Continue to account'}
           </Button>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
